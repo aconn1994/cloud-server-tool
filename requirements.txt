@@ -1,0 +1,3 @@
+pandas==2.2.2
+py-steamcmd-wrapper==1.1.1
+beautifulsoup4==4.12.3
