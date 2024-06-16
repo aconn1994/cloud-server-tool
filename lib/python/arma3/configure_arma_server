@@ -120,9 +120,13 @@ def build_launch_file(mod_list_df):
 
 def main():
     # Set paths
-    LOCAL_MOD_DIR = os.path.join(os.getcwd(), 'steamcmd', 'arma3', 'mods')
-    LOCAL_KEYS_DIR = os.path.join(os.getcwd(), 'steamcmd', 'arma3', 'keys')
-    STEAM_DOWNLOAD_DIR = os.path.join(os.getcwd(), 'steamcmd', 'arma3', 'steamapps', 'workshop', 'content', '107410')
+    STEAMCMD_DIR = os.path.join(os.getcwd(), 'steamcmd')
+    LOCAL_GAME_DIR = os.path.join(STEAMCMD_DIR, 'arma3')
+    LOCAL_MOD_DIR = os.path.join(LOCAL_GAME_DIR, 'mods')
+    LOCAL_KEYS_DIR = os.path.join(LOCAL_GAME_DIR, 'keys')
+    STEAM_DOWNLOAD_DIR = os.path.join(LOCAL_GAME_DIR, 'steamapps', 'workshop', 'content', '107410')
+    print(STEAMCMD_DIR)
+    print(LOCAL_GAME_DIR)
     print(LOCAL_MOD_DIR)
     print(LOCAL_KEYS_DIR)
     print(STEAM_DOWNLOAD_DIR)
@@ -133,32 +137,35 @@ def main():
     mod_list_df = get_mod_list(mod_file)
     
     # Config SteamCMD
-    s = SteamCMD("steamcmd")
+    s = SteamCMD(STEAMCMD_DIR)
     try:
         s.install()
     except SteamCMDException:
         print("SteamCMD already installed")
 
-    s.login()
+    s.login() # These will need to go into Systems Manager/Secrets Manager
 
-    # Download Mods
-    i = 0
-    mod_list_length = mod_list_df.shape[0]
-    while (i < mod_list_length): # change to mod_list_length
-        mod_handler(s, mod_list_df.iloc[i])
-        i = i + 1
-    
-    # Rename all files to lowercase
-    subprocess.call(['sh', './handle_mods.sh'])
+    # Install/Update Arma 3 Server
+    # s.app_update(233780,LOCAL_GAME_DIR,validate=True)
 
-    # Link Mods and Keys for Server Use
-    i = 0
-    while (i < mod_list_length): # change to mod_list_length
-        link_mods(mod_list_df.iloc[i], LOCAL_MOD_DIR, STEAM_DOWNLOAD_DIR, LOCAL_KEYS_DIR)
-        i = i + 1
+    # # Download Mods
+    # i = 0
+    # mod_list_length = mod_list_df.shape[0]
+    # while (i < mod_list_length): # change to mod_list_length
+    #     mod_handler(s, mod_list_df.iloc[i])
+    #     i = i + 1
     
-    # Build server launch file
-    build_launch_file(mod_list_df)
+    # # Rename all files to lowercase
+    # subprocess.call(['sh', './handle_mods.sh'])
+
+    # # Link Mods and Keys for Server Use
+    # i = 0
+    # while (i < mod_list_length): # change to mod_list_length
+    #     link_mods(mod_list_df.iloc[i], LOCAL_MOD_DIR, STEAM_DOWNLOAD_DIR, LOCAL_KEYS_DIR)
+    #     i = i + 1
+    
+    # # Build server launch file
+    # build_launch_file(mod_list_df)
 
 if __name__ == '__main__':
     main()
