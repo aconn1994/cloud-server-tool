@@ -41,5 +41,5 @@ RUN chmod 777 /home/arma3/steamcmd/linux32/steamcmd
 RUN sh ./steamcmd.sh <<< "exit"
 
 # Switch to arma3 user
-# WORKDIR /home/arma3
+WORKDIR /home/arma3
 # USER arma3

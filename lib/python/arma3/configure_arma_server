@@ -91,11 +91,16 @@ def link_mods(mod, LOCAL_MOD_DIR, STEAM_DOWNLOAD_DIR, LOCAL_KEYS_DIR):
 def build_launch_file(mod_list_df):
     print('Building launch file...')
     LAUNCH_FILE_DIR = os.path.join(os.getcwd(), 'steamcmd', 'arma3', 'launch.sh')
+    CONFIG_FILE_DIR = os.path.join(os.getcwd(), 'steamcmd', 'arma3', 'server.cfg')
 
     launch_file_exists = os.path.exists(LAUNCH_FILE_DIR)
+    config_file_exists = os .path.exists(CONFIG_FILE_DIR)
 
     if not launch_file_exists:
         shutil.copyfile('/home/arma3/launch.sh', LAUNCH_FILE_DIR)
+    
+    if not config_file_exists:
+        shutil.copyfile('/home/arma3/server.cfg', CONFIG_FILE_DIR)
 
     search_text = 'mods='
     replace_text = 'mods='
@@ -105,7 +110,7 @@ def build_launch_file(mod_list_df):
     while (i < mod_list_length):
         formatted_mod_name = format_mod_name(mod_list_df.iloc[i]['for_mod_name'])
         # print(formatted_mod_name)
-        replace_text = f'{replace_text}mods/@{formatted_mod_name};'
+        replace_text = f'{replace_text}mod=mods/@{formatted_mod_name}; '
         i = i + 1
 
     print('Replace Text: ', replace_text)

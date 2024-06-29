@@ -11,4 +11,4 @@ mods=mods/@antistasiultimatemod;mods/@cbaa3;mods/@duisquadradar;mods/@enhancedmo
 config=server.cfg
 
 # Start Server
-./arma3server_x64 -name=$server -mod=$mods -config=$config
+./arma3server_x64 -name=$server $mods -config=$config
