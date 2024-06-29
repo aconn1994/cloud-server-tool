@@ -7,6 +7,7 @@ import pandas
 import re
 from pysteamcmdwrapper import SteamCMD, SteamCMDException
 import subprocess
+import shutil
 
 def parse_args():
     argp = argparse.ArgumentParser()
@@ -89,6 +90,13 @@ def link_mods(mod, LOCAL_MOD_DIR, STEAM_DOWNLOAD_DIR, LOCAL_KEYS_DIR):
 
 def build_launch_file(mod_list_df):
     print('Building launch file...')
+    LAUNCH_FILE_DIR = os.path.join(os.getcwd(), 'steamcmd', 'arma3', 'launch.sh')
+
+    launch_file_exists = os.path.exists(LAUNCH_FILE_DIR)
+
+    if not launch_file_exists:
+        shutil.copyfile('/home/arma3/launch.sh', LAUNCH_FILE_DIR)
+
     search_text = 'mods='
     replace_text = 'mods='
 
@@ -112,7 +120,7 @@ def build_launch_file(mod_list_df):
                 new_launch_file_lines[line_num] = replace_text + '\n'
         # print(new_launch_file_lines)
     
-    with open(os.path.join(os.getcwd(), 'steamcmd', 'arma3', 'launch.sh'), 'w') as new_launch_file:
+    with open(LAUNCH_FILE_DIR, 'w') as new_launch_file:
         new_launch_file.writelines(new_launch_file_lines)
 
 
@@ -146,26 +154,30 @@ def main():
     s.login() # These will need to go into Systems Manager/Secrets Manager
 
     # Install/Update Arma 3 Server
-    # s.app_update(233780,LOCAL_GAME_DIR,validate=True)
+    s.app_update(233780,LOCAL_GAME_DIR,validate=True)
 
-    # # Download Mods
-    # i = 0
-    # mod_list_length = mod_list_df.shape[0]
-    # while (i < mod_list_length): # change to mod_list_length
-    #     mod_handler(s, mod_list_df.iloc[i])
-    #     i = i + 1
-    
-    # # Rename all files to lowercase
-    # subprocess.call(['sh', './handle_mods.sh'])
+    # Download Mods
+    mod_path_exist = os.path.exists(LOCAL_MOD_DIR)
+    if not mod_path_exist:
+        os.mkdir(LOCAL_MOD_DIR)
 
-    # # Link Mods and Keys for Server Use
-    # i = 0
-    # while (i < mod_list_length): # change to mod_list_length
-    #     link_mods(mod_list_df.iloc[i], LOCAL_MOD_DIR, STEAM_DOWNLOAD_DIR, LOCAL_KEYS_DIR)
-    #     i = i + 1
+    i = 0
+    mod_list_length = mod_list_df.shape[0]
+    while (i < mod_list_length): # change to mod_list_length
+        mod_handler(s, mod_list_df.iloc[i])
+        i = i + 1
     
-    # # Build server launch file
-    # build_launch_file(mod_list_df)
+    # Rename all files to lowercase
+    subprocess.call(['sh', './handle_mods.sh'])
+
+    # Link Mods and Keys for Server Use
+    i = 0
+    while (i < mod_list_length): # change to mod_list_length
+        link_mods(mod_list_df.iloc[i], LOCAL_MOD_DIR, STEAM_DOWNLOAD_DIR, LOCAL_KEYS_DIR)
+        i = i + 1
+    
+    # Build server launch file
+    build_launch_file(mod_list_df)
 
 if __name__ == '__main__':
     main()

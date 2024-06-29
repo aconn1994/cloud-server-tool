@@ -2,7 +2,7 @@
 FROM ubuntu:latest
 
 # Attach Shell
-SHELL ["/bin/sh", "-c"]
+SHELL ["/bin/bash", "-c"]
 
 # Port Forwarding
 EXPOSE 2302/udp
@@ -31,7 +31,15 @@ RUN rm server_config.tar.gz
 # Configure Python environment
 RUN python3 -m venv .venv
 RUN source .venv/bin/activate
-RUN python3 -m pip install -r requirements.txt
+RUN python3 -m pip install -r requirements.txt --break-system-packages
+
+# Add steamcmd directory
+WORKDIR /home/arma3/steamcmd
+RUN wget -qO- 'http://media.steampowered.com/installer/steamcmd_linux.tar.gz' | tar zxf - -C /home/arma3/steamcmd
+RUN chmod 777 /home/arma3/steamcmd
+RUN chmod 777 /home/arma3/steamcmd/linux32/steamcmd
+RUN sh ./steamcmd.sh <<< "exit"
 
 # Switch to arma3 user
-USER arma3
+# WORKDIR /home/arma3
+# USER arma3
