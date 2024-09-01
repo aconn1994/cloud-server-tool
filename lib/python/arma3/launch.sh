@@ -5,7 +5,7 @@
 server=server
 
 # Server mods
-mods=mods/@antistasiultimatemod;mods/@cbaa3;mods/@duisquadradar;mods/@enhancedmovement;mods/@enhancedmovementrework;mods/@jsrssoundmod;mods/@jsrssoundmodrhsafrfmodpacksoundsupport;mods/@jsrssoundmodrhsgrefmodpacksoundsupport;mods/@jsrssoundmodrhssafmodpacksupport;mods/@jsrssoundmodrhsusafmodpacksoundsupport;mods/@removestamina;mods/@rhsafrf;mods/@rhsgref;mods/@rhssaf;mods/@rhsusaf;
+mods=
 
 # Config File Name
 config=server.cfg

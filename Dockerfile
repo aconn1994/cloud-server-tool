@@ -5,10 +5,8 @@ FROM ubuntu:latest
 SHELL ["/bin/bash", "-c"]
 
 # Port Forwarding
-EXPOSE 2302/udp
-EXPOSE 2303/udp
-EXPOSE 2304/udp
-EXPOSE 2305/udp
+EXPOSE 2344/udp 2344 2345
+EXPOSE 2302/udp 2303/udp 2304/udp 2305/udp 2306/udp
 
 # Update Ubuntu to latest version/Install additional dependencies
 RUN apt-get update \

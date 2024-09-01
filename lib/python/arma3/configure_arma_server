@@ -110,7 +110,7 @@ def build_launch_file(mod_list_df):
     while (i < mod_list_length):
         formatted_mod_name = format_mod_name(mod_list_df.iloc[i]['for_mod_name'])
         # print(formatted_mod_name)
-        replace_text = f'{replace_text}mod=mods/@{formatted_mod_name}; '
+        replace_text = f'{replace_text}-mod="mods/@{formatted_mod_name};" '
         i = i + 1
 
     print('Replace Text: ', replace_text)
@@ -156,7 +156,7 @@ def main():
     except SteamCMDException:
         print("SteamCMD already installed")
 
-    s.login() # These will need to go into Systems Manager/Secrets Manager
+    s.login('', '') # These will need to go into Systems Manager/Secrets Manager
 
     # Install/Update Arma 3 Server
     s.app_update(233780,LOCAL_GAME_DIR,validate=True)
