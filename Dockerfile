@@ -37,6 +37,7 @@ RUN wget -qO- 'http://media.steampowered.com/installer/steamcmd_linux.tar.gz' | 
 RUN chmod 777 /home/arma3/steamcmd
 RUN chmod 777 /home/arma3/steamcmd/linux32/steamcmd
 RUN sh ./steamcmd.sh <<< "exit"
+# RUN sh ./steamcmd.sh
 
 # Switch to arma3 user
 WORKDIR /home/arma3
