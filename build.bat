@@ -1,16 +1,15 @@
 :: Remove entities to be replaced
-:: docker container rm a3-server
-:: docker rmi $(docker images 'arma-server' -q)
-:: rmdir /q /s dist
+docker container rm a3-server
+docker rmi $(docker images 'arma-server' -q)
+rmdir /q /s dist
 
 :: Setup build directory with entities
 mkdir dist
-cd lib/python/arma3
+cd lib/python
 tar -cvzf server_config.tar.gz *
-XCOPY /i /y C:\Users\Chris\Documents\adams_arma\cloud-server-tool\lib\python\arma3\server_config.tar.gz C:\Users\Chris\Documents\adams_arma\cloud-server-tool\dist\
-rm server_config.tar.gz
-cd ../../..
-XCOPY /i /y C:\Users\Chris\Documents\adams_arma\cloud-server-tool\requirements.txt C:\Users\Adam\dev\cloud-server-tool\dist\
+XCOPY /i /y C:\Users\Adam\dev\cloud-server-tool\lib\python\server_config.tar.gz C:\Users\Adam\dev\cloud-server-tool\dist\
+del server_config.tar.gz
+cd ../..
 
 :: Rebuild docker image and run
 docker build -t arma-server:latest .

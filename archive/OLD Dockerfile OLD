@@ -14,18 +14,9 @@ RUN apt-get update \
     lib32stdc++6 \
     lib32gcc-s1 \
     wget \
-    python3
-
-# Set Environment Variables
-ENV DIR_STEAMCMD steamcmd
-ENV DIR_LOCAL_GAME arma3
-ENV DIR_LOCAL_MOD mods
-ENV DIR_KEYS_DIR keys
-ENV DIR_STEAM_MOD_DOWNLOAD steamapps/workshop/content/107410
-ENV STEAM_USERNAME <your-steam-username>
-ENV STEAM_PASSWORD <your-steam-password>
-ENV GAME_SERVER_ID 233780
-ENV GAME_WORKSHOP_ID 107410
+    python3 \
+    python3-pip \
+    python3.12-venv
 
 # Create arma3 user and configure server scripting entities
 RUN useradd arma3
@@ -34,12 +25,19 @@ ADD /dist/ /home/arma3
 RUN tar -xvzf server_config.tar.gz
 RUN rm server_config.tar.gz
 
+# Configure Python environment
+RUN python3 -m venv .venv
+RUN source .venv/bin/activate
+RUN python3 -m pip install -r requirements.txt --break-system-packages
+
 # Add steamcmd directory
 WORKDIR /home/arma3/steamcmd
-RUN wget -qO- "http://media.steampowered.com/installer/steamcmd_linux.tar.gz" | tar zxf - -C /home/arma3/steamcmd
+RUN wget -qO- 'http://media.steampowered.com/installer/steamcmd_linux.tar.gz' | tar zxf - -C /home/arma3/steamcmd
 RUN chmod 777 /home/arma3/steamcmd
 RUN chmod 777 /home/arma3/steamcmd/linux32/steamcmd
+RUN sh ./steamcmd.sh <<< "exit"
+# RUN sh ./steamcmd.sh
 
-# Run Arma 3 install
+# Switch to arma3 user
 WORKDIR /home/arma3
-# CMD ["python3", "install.py"]
+# USER arma3
