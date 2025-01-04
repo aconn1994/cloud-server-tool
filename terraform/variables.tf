@@ -6,8 +6,8 @@ variable "region" {
 
 variable "environment" {
   description = "Value for deployment environment"
-  type = string
-  default = "dev"
+  type        = string
+  default     = "dev"
 }
 
 variable "ami" {

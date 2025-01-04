@@ -4,6 +4,10 @@
 
 Initializing a configuration directory downloads and installs the providers defined in the configuration, which in this case is the aws provider.  Run when created a new terraform directory.
 
+# Generate ssh key for instance
+
+`ssh-keygen -t rsa -b 2048 -f ec2-ssh-keypair`
+
 # Format the configuration
 
 `terraform fmt`
