@@ -7,7 +7,7 @@ variable "region" {
 variable "environment" {
   description = "Value for deployment environment"
   type        = string
-  default     = "dev"
+  default     = "DEV"
 }
 
 variable "ami" {
@@ -25,5 +25,11 @@ variable "instance_type" {
 variable "build_type" {
   description = "Value tag for build type"
   type        = string
-  default     = "terraform"
+  default     = "TERRAFORM"
+}
+
+variable "ami_key_pair_name" {
+  description = "AMI Key Pair"
+  type        = string
+  default     = ""
 }
