@@ -19,9 +19,21 @@ class SteamCMDClient:
         if self._username and self._password:
             steamcmd.extend(['+login', self._username, self._password])
         else:
+            print("Steam Username and/or Password not provided. Logging in anonymously...")
             steamcmd.extend(['+login', 'anonymous'])
 
         steamcmd.extend(['+app_update', game_id, 'validate'])
         steamcmd.extend(['+quit'])
 
         subprocess.call(steamcmd)
+
+    def download_workshop_mod(self, game_id, game_workshop_id): # Install one mod at a time... or make object with all mod information??
+        steamcmd = ['./steamcmd/steamcmd.sh']
+
+        if self._username and self._password:
+            steamcmd.extend(['+login', self._username, self._password])
+
+        else:
+            print("Steam Username and Password required to download workshop items. Skipping workshop downloads...")
+            
+

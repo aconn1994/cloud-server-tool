@@ -3,6 +3,7 @@
 import os
 import SteamClient.SteamCMDClient as SCC
 
+
 def main():
 
     # Environment Variables (DockerFile)
@@ -26,6 +27,7 @@ def main():
     print(GAME_SERVER_ID)
     print(GAME_WORKSHOP_ID)
 
+    # Initialize SteamCMD
     steam_client = SCC.SteamCMDClient(
         LOCAL_GAME_DIR,
         STEAM_DOWNLOAD_DIR,
@@ -33,7 +35,10 @@ def main():
         STEAM_PASSWORD
     )
 
+    # Handle Game Installation
     steam_client.install_game(GAME_SERVER_ID)
+
+    ## Decide on how to handling modding/workshop items per game
 
 
 if __name__ == '__main__':
