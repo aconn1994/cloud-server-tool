@@ -42,4 +42,4 @@ RUN chmod 777 /home/arma3/steamcmd/linux32/steamcmd
 
 # Run Arma 3 install
 WORKDIR /home/arma3
-# CMD ["python3", "install.py"]
+CMD ["python3", "install.py"]
