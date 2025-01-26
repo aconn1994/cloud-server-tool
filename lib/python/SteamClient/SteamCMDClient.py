@@ -32,8 +32,15 @@ class SteamCMDClient:
 
         if self._username and self._password:
             steamcmd.extend(['+login', self._username, self._password])
-
         else:
-            print("Steam Username and Password required to download workshop items. Skipping workshop downloads...")
-            
+            print("Steam Username and Password required to download workshop items. Trying to download workshop items anonymously...")
+            steamcmd.extend(['+login', 'anonymous'])
+        
+        steamcmd.extend('+workshop_download_item', game_id, game_workshop_id, 'validate')
+        steamcmd.extend(['+quit'])
+
+        subprocess.call(steamcmd)
+    
+    def launch_server(self):
+        pass
 

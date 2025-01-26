@@ -2,13 +2,15 @@
 
 import os
 import SteamClient.SteamCMDClient as SCC
+import GameConfigClient.GameConfigClient as GCC
 
 
 def main():
 
     # Environment Variables (DockerFile)
     STEAMCMD_DIR = os.path.join(os.getcwd(), os.environ['DIR_STEAMCMD'])
-    LOCAL_GAME_DIR = os.path.join(STEAMCMD_DIR, os.environ['DIR_LOCAL_GAME'])
+    LOCAL_GAME_ID = os.environ['DIR_LOCAL_GAME']
+    LOCAL_GAME_DIR = os.path.join(STEAMCMD_DIR, LOCAL_GAME_ID)
     LOCAL_MOD_DIR = os.path.join(LOCAL_GAME_DIR, os.environ['DIR_LOCAL_MOD'])
     LOCAL_KEYS_DIR = os.path.join(LOCAL_GAME_DIR, os.environ['DIR_KEYS_DIR'])
     STEAM_DOWNLOAD_DIR = os.path.join(LOCAL_GAME_DIR, os.environ['DIR_STEAM_MOD_DOWNLOAD'])
@@ -18,6 +20,7 @@ def main():
     GAME_WORKSHOP_ID = os.environ['GAME_WORKSHOP_ID']
     
     print(STEAMCMD_DIR)
+    print(LOCAL_GAME_ID)
     print(LOCAL_GAME_DIR)
     print(LOCAL_MOD_DIR)
     print(LOCAL_KEYS_DIR)
@@ -27,19 +30,19 @@ def main():
     print(GAME_SERVER_ID)
     print(GAME_WORKSHOP_ID)
 
-    # Initialize SteamCMD
+    gc_client = GCC.GameConfigClient(LOCAL_GAME_ID) ## NEEDS PROPER TESTING
     steam_client = SCC.SteamCMDClient(
         LOCAL_GAME_DIR,
         STEAM_DOWNLOAD_DIR,
         STEAM_USERNAME,
         STEAM_PASSWORD
     )
-
-    # Handle Game Installation
+    
     steam_client.install_game(GAME_SERVER_ID)
 
-    ## Decide on how to handling modding/workshop items per game
-
+    if gc_client.workshop_items_list is not None:
+        for workshop_item in gc_client.workshop_items_list:
+            steam_client.download_workshop_mod(GAME_SERVER_ID, workshop_item.id)
 
 if __name__ == '__main__':
     main()
