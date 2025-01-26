@@ -10,7 +10,7 @@ class GameConfigClient:
     def _parse_mod_list(self, local_game_dir):
         pass
 
-    def _get_configuration(self):
+    def _get_configuration(self): # Convert to Python Model/Yaml File pattern?
         return {
             "arma3": {
                 "mod_file_path": os.path.join(self.local_game_dir, "mod_list.html"),
