@@ -7,12 +7,12 @@ class SteamCMDClient:
         username,
         password
     ):
-        self.local_game_dir = local_game_dir
-        self.steam_download_dir = steam_download_dir
-        self._username = username
-        self._password = password
+        self.local_game_dir: str = local_game_dir
+        self.steam_download_dir: str = steam_download_dir
+        self._username: str = username
+        self._password: str = password
     
-    def install_game(self, game_id):
+    def install_game(self, game_id) -> None:
         steamcmd = ['./steamcmd/steamcmd.sh']
         steamcmd.extend(['+force_install_dir', self.local_game_dir])
 
@@ -27,7 +27,7 @@ class SteamCMDClient:
 
         subprocess.call(steamcmd)
 
-    def download_workshop_mod(self, game_id, game_workshop_id): # Install one mod at a time... or make object with all mod information??
+    def download_workshop_mod(self, game_id, game_workshop_id) -> None:
         steamcmd = ['./steamcmd/steamcmd.sh']
 
         if self._username and self._password:
