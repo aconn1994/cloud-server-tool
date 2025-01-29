@@ -38,11 +38,11 @@ def main():
         STEAM_PASSWORD
     )
     
-    # steam_client.install_game(GAME_SERVER_ID)
+    steam_client.install_game(GAME_SERVER_ID)
 
-    # if gc_client.workshop_items_list is not None:
-    #     for workshop_item in gc_client.workshop_items_list:
-    #         steam_client.download_workshop_mod(GAME_SERVER_ID, workshop_item.id)
+    gc_client.handle_mod_configuration(
+        steam_client,
+    )
 
 if __name__ == '__main__':
     main()
