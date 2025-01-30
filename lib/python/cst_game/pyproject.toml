@@ -1,0 +1,16 @@
+[project]
+name = "cst-game"
+version = "0.1.0"
+description = "Package will be installed in a docker container on virtual machine and handle game installation and configuration."
+authors = [
+    {name = "Adam Connolly",email = "45522351+aconn1994@users.noreply.github.com"}
+]
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
