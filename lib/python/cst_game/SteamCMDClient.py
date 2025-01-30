@@ -16,10 +16,10 @@ class SteamCMDClient:
         steamcmd = ['./steamcmd/steamcmd.sh']
         steamcmd.extend(['+force_install_dir', self.local_game_dir])
 
-        if self._username != "NULL" and self._password != "NULL":
+        if self._username != 'NULL' and self._password != 'NULL':
             steamcmd.extend(['+login', self._username, self._password])
         else:
-            print("Steam Username and/or Password not provided. Logging in anonymously...")
+            print('Steam Username and/or Password not provided. Logging in anonymously...')
             steamcmd.extend(['+login', 'anonymous'])
 
         steamcmd.extend(['+app_update', game_id, 'validate'])
@@ -30,10 +30,10 @@ class SteamCMDClient:
     def download_workshop_mod(self, game_id: str, game_workshop_id: str) -> None:
         steamcmd = ['./steamcmd/steamcmd.sh']
 
-        if self._username != "NULL" and self._password != "NULL":
+        if self._username != 'NULL' and self._password != 'NULL':
             steamcmd.extend(['+login', self._username, self._password])
         else:
-            print("Steam Username and Password required to download workshop items. Trying to download workshop items anonymously...")
+            print('Steam Username and Password required to download workshop items. Trying to download workshop items anonymously...')
             steamcmd.extend(['+login', 'anonymous'])
         
         steamcmd.extend('+workshop_download_item', game_id, game_workshop_id, 'validate')
