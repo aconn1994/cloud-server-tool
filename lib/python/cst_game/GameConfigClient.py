@@ -1,13 +1,13 @@
 import os
 import importlib
 
-from lib.python.SteamClient.SteamCMDClient import SteamCMDClient
+from SteamClient.SteamCMDClient import SteamCMDClient
 
 class GameConfigClient:
     def __init__(self, local_game_dir: str) -> None:
         self.local_game_dir: str = local_game_dir
-        self.config: str = None
-        self.workshop_items_dict: dict[str, str] = None
+        self.config: str | None = None
+        self.workshop_items_dict: dict[str, str] | None = None
         self._execute()
 
     def _get_configuration(self) -> dict[str, dict[str, str]]: # Convert to Python Model/Yaml File pattern?
