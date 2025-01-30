@@ -1,8 +1,10 @@
 import os
 import importlib
 
+from lib.python.SteamClient.SteamCMDClient import SteamCMDClient
+
 class GameConfigClient:
-    def __init__(self, local_game_dir) -> None:
+    def __init__(self, local_game_dir: str) -> None:
         self.local_game_dir: str = local_game_dir
         self.config: str = None
         self.workshop_items_dict: dict[str, str] = None
@@ -26,6 +28,12 @@ class GameConfigClient:
 
     def handle_mod_configuration(
         self,
-        steam_client,
+        steam_client: SteamCMDClient,
+        game_server_id: str,
+        local_game_dir: str,
+        local_mod_dir: str,
+        steam_workshop_dir: str
     ) -> None:
-        pass
+        for display_name, workshop_item_id in self.workshop_items_dict.items():
+            steam_client.download_workshop_mod(game_server_id, workshop_item_id)
+            # todo, need to test pathing for mod download, add symlinks

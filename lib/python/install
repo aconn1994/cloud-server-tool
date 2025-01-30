@@ -8,16 +8,17 @@ import GameConfigClient.GameConfigClient as GCC
 def main():
 
     # Environment Variables (DockerFile)
-    STEAMCMD_DIR = os.path.join(os.getcwd(), os.environ['DIR_STEAMCMD'])
-    LOCAL_GAME_ID = os.environ['DIR_LOCAL_GAME']
-    LOCAL_GAME_DIR = os.path.join(STEAMCMD_DIR, LOCAL_GAME_ID)
-    LOCAL_MOD_DIR = os.path.join(LOCAL_GAME_DIR, os.environ['DIR_LOCAL_MOD'])
-    LOCAL_KEYS_DIR = os.path.join(LOCAL_GAME_DIR, os.environ['DIR_KEYS_DIR'])
-    STEAM_DOWNLOAD_DIR = os.path.join(LOCAL_GAME_DIR, os.environ['DIR_STEAM_MOD_DOWNLOAD'])
-    STEAM_USERNAME = os.environ['STEAM_USERNAME']
-    STEAM_PASSWORD = os.environ['STEAM_PASSWORD']
-    GAME_SERVER_ID = os.environ['GAME_SERVER_ID']
-    GAME_WORKSHOP_ID = os.environ['GAME_WORKSHOP_ID']
+    STEAMCMD_DIR: str = os.path.join(os.getcwd(), os.environ['DIR_STEAMCMD'])
+    LOCAL_GAME_ID: str = os.environ['DIR_LOCAL_GAME']
+    LOCAL_GAME_DIR: str = os.path.join(STEAMCMD_DIR, LOCAL_GAME_ID)
+    LOCAL_MOD_DIR: str = os.path.join(LOCAL_GAME_DIR, os.environ['DIR_LOCAL_MOD'])
+    LOCAL_KEYS_DIR: str = os.path.join(LOCAL_GAME_DIR, os.environ['DIR_KEYS_DIR'])
+    STEAM_USERNAME: str = os.environ['STEAM_USERNAME']
+    STEAM_PASSWORD: str = os.environ['STEAM_PASSWORD']
+    GAME_SERVER_ID: str = os.environ['GAME_SERVER_ID']
+    GAME_WORKSHOP_ID: str = os.environ['GAME_WORKSHOP_ID']
+    STEAM_DOWNLOAD_DIR: str = os.path.join(LOCAL_GAME_DIR, os.environ['DIR_STEAM_MOD_DOWNLOAD'], GAME_WORKSHOP_ID)
+
     
     print(STEAMCMD_DIR)
     print(LOCAL_GAME_ID)
@@ -42,6 +43,10 @@ def main():
 
     gc_client.handle_mod_configuration(
         steam_client,
+        GAME_SERVER_ID,
+        LOCAL_GAME_DIR,
+        LOCAL_MOD_DIR,
+        STEAM_DOWNLOAD_DIR
     )
 
 if __name__ == '__main__':

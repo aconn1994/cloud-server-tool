@@ -21,7 +21,7 @@ ENV DIR_STEAMCMD steamcmd
 ENV DIR_LOCAL_GAME arma_three
 ENV DIR_LOCAL_MOD mods
 ENV DIR_KEYS_DIR keys
-ENV DIR_STEAM_MOD_DOWNLOAD steamapps/workshop/content/107410
+ENV DIR_STEAM_MOD_DOWNLOAD steamapps/workshop/content
 ENV STEAM_USERNAME <your-steam-username>
 ENV STEAM_PASSWORD <your-steam-password>
 ENV GAME_SERVER_ID 233780

@@ -12,7 +12,7 @@ class SteamCMDClient:
         self._username: str = username
         self._password: str = password
     
-    def install_game(self, game_id) -> None:
+    def install_game(self, game_id: str) -> None:
         steamcmd = ['./steamcmd/steamcmd.sh']
         steamcmd.extend(['+force_install_dir', self.local_game_dir])
 
@@ -27,7 +27,7 @@ class SteamCMDClient:
 
         subprocess.call(steamcmd)
 
-    def download_workshop_mod(self, game_id, game_workshop_id) -> None:
+    def download_workshop_mod(self, game_id: str, game_workshop_id: str) -> None:
         steamcmd = ['./steamcmd/steamcmd.sh']
 
         if self._username and self._password:
