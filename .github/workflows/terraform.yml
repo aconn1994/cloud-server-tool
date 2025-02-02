@@ -1,0 +1,54 @@
+name: "Terraform Management Pipeline using Github Actions"
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - terraform/**
+
+env:
+ # verbosity setting for Terraform logs
+ TF_LOG: INFO
+ # Credentials for deployment to AWS
+ AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+ AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+jobs:
+  terraform:
+    name: "Terraform Change Management"
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./terraform
+
+    steps:
+     - name: Checkout repo to runner
+       uses: actions/checkout@v2
+
+     - name: Step Terraform with specific version
+       uses: hashicorp/setup-terraform@v2
+       with:
+          terraform_version: 'latest'
+
+     - name: Terraform init
+       id: init
+       run: terraform init
+
+     - name: Terraform format
+       id: fmt
+       run: terraform fmt -check
+
+     - name: Terraform validate
+       id: validate
+       run: terraform validate
+
+     - name: Terraform plan
+       id: plan
+       run: terraform plan -no-color -input=false
+       continue-on-error: true
+
+     - name: Terraform Plan Status
+       if: steps.plan.outcome == 'failure'
+       run: exit 1

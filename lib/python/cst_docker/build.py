@@ -1,5 +1,5 @@
 import argparse
-from DockerClient import DockerClient
+from clients.DockerClient import DockerClient # todo, need to understand module building in python
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
@@ -14,7 +14,8 @@ def main():
     workspace = 'game-server'
 
     docker = DockerClient(workspace, exists=args.clean_up)
-
+    print('Image Id: ', docker.image_id)
+    print('Container Id: ', docker.container_id)
     if args.clean_up:
         docker.remove_container(force=True)
         docker.remove_image(force=True)

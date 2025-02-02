@@ -35,8 +35,10 @@ ENV GAME_WORKSHOP_ID 107410
 RUN useradd gameuser
 WORKDIR /home/gameuser
 
-# Add steamcmd directory
+# Add game directory
 WORKDIR /home/gameuser/steamcmd
+
+# todo, works exclusively for Steam platform, need to abstract games outside of steam
 RUN wget -qO- "http://media.steampowered.com/installer/steamcmd_linux.tar.gz" | tar zxf - -C /home/gameuser/steamcmd
 RUN chmod 777 /home/gameuser/steamcmd
 RUN chmod 777 /home/gameuser/steamcmd/linux32/steamcmd
