@@ -1,0 +1,31 @@
+services:
+  cst-base:
+    container_name: cst-base-container
+    image: python:3.13-slim-bookworm
+    platform: linux/amd64
+    build:
+      dockerfile: local_env/images/base_image/Dockerfile
+      context: .
+    privileged: true
+    user: root
+    working_dir: /root/cloud-server-tool
+    volumes:
+      - .:/root/cloud-server-tool:rw,z
+    entrypoint: /bin/bash
+
+  cst-debug:
+    container_name: cst-debug-container
+    image: cst_base:latest
+    platform: linux/amd64
+    build:
+      dockerfile: local_env/images/debug_image/Dockerfile
+      context: .
+    privileged: true
+    user: root
+    working_dir: /root/cloud-server-tool
+    volumes:
+      - .:/root/cloud-server-tool:rw,z
+    ports:
+      - "2223:22"
+    depends_on:
+      - cst-base

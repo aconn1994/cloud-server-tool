@@ -1,7 +1,7 @@
 import os
 import importlib
 
-from SteamCMDClient import SteamCMDClient
+from clients.SteamCMDClient import SteamCMDClient
 
 class GameConfigClient:
     def __init__(self, local_game_dir: str) -> None:

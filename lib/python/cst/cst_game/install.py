@@ -36,17 +36,18 @@ def main():
         steam_username,
         steam_password
     )
-    
-    steam_client.install_game(game_server_id)
 
-    if gc_client.workshop_items_dict:
-        gc_client.handle_mod_configuration(
-            steam_client,
-            game_server_id,
-            local_game_dir,
-            local_mod_dir,
-            steam_download_dir
-        )
+
+    # steam_client.install_game(game_server_id)
+    #
+    # if gc_client.workshop_items_dict:
+    #     gc_client.handle_mod_configuration(
+    #         steam_client,
+    #         game_server_id,
+    #         local_game_dir,
+    #         local_mod_dir,
+    #         steam_download_dir
+    #     )
 
 if __name__ == '__main__':
     main()
