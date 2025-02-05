@@ -1,6 +1,6 @@
 import os
-from clients.SteamCMDClient import SteamCMDClient # todo, currently broken, need to understand module building in python
-from clients.GameConfigClient import GameConfigClient # todo, currently broken, need to understand module building in python
+from cst_game.clients.SteamCMDClient import SteamCMDClient # todo, currently broken, need to understand module building in python
+from cst_game.clients.GameConfigClient import GameConfigClient # todo, currently broken, need to understand module building in python
 
 
 def main():

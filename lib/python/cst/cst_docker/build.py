@@ -1,5 +1,5 @@
 import argparse
-from clients.DockerClient import DockerClient # todo, need to understand module building in python
+from cst_docker.clients.DockerClient import DockerClient # todo, need to understand module building in python
 
 parser = argparse.ArgumentParser()
 parser.add_argument(

@@ -1,7 +1,7 @@
 services:
   cst-base:
     container_name: cst-base-container
-    image: python:3.13-slim-bookworm
+    image: cst-base:latest
     platform: linux/amd64
     build:
       dockerfile: local_env/images/base_image/Dockerfile
@@ -15,7 +15,7 @@ services:
 
   cst-debug:
     container_name: cst-debug-container
-    image: cst_base:latest
+    image: cst_debug:latest
     platform: linux/amd64
     build:
       dockerfile: local_env/images/debug_image/Dockerfile

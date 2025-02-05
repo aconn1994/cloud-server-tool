@@ -1,4 +1,6 @@
-FROM cst-base
+FROM cst-base:latest
+
+USER root
 
 COPY /local_env/ssh_entrypoint/entrypoint.sh /entrypoint.sh
 
@@ -15,5 +17,7 @@ RUN apt-get update --allow-insecure-repositories && \
 RUN pip install --no-cache-dir pydevd-pycharm pipenv
 
 EXPOSE 22
+
+RUN echo "export PATH=${PATH}" >> /root/.bashrc
 
 ENTRYPOINT ["/entrypoint.sh"]
