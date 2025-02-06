@@ -1,7 +1,6 @@
 import os
 import importlib
-
-from cst_game.clients.SteamCMDClient import SteamCMDClient
+from typing import Any
 
 class GameConfigClient:
     def __init__(self, local_game_dir: str) -> None:
@@ -28,7 +27,7 @@ class GameConfigClient:
 
     def handle_mod_configuration(
         self,
-        steam_client: SteamCMDClient,
+        steam_client: Any,
         game_server_id: str,
         local_game_dir: str,
         local_mod_dir: str,

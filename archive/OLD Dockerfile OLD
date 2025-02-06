@@ -1,6 +1,10 @@
 # Set base image and info
 FROM ubuntu:latest
 
+# Build Args
+ARG STEAM_USERNAME_ARG=NULL
+ARG STEAM_PASSWORD_ARG=NULL
+
 # Attach Shell
 SHELL ["/bin/bash", "-c"]
 
@@ -14,30 +18,31 @@ RUN apt-get update \
     lib32stdc++6 \
     lib32gcc-s1 \
     wget \
-    python3 \
-    python3-pip \
-    python3.12-venv
+    python3
 
-# Create arma3 user and configure server scripting entities
-RUN useradd arma3
-WORKDIR /home/arma3
-ADD /dist/ /home/arma3
-RUN tar -xvzf server_config.tar.gz
-RUN rm server_config.tar.gz
+# Set Environment Variables
+ENV DIR_STEAMCMD steamcmd
+ENV DIR_LOCAL_GAME arma_three
+ENV DIR_LOCAL_MOD mods
+ENV DIR_KEYS_DIR keys
+ENV DIR_STEAM_MOD_DOWNLOAD steamapps/workshop/content
+ENV STEAM_USERNAME ${STEAM_USERNAME_ARG}
+ENV STEAM_PASSWORD ${STEAM_PASSWORD_ARG}
+ENV GAME_SERVER_ID 233780
+ENV GAME_WORKSHOP_ID 107410
 
-# Configure Python environment
-RUN python3 -m venv .venv
-RUN source .venv/bin/activate
-RUN python3 -m pip install -r requirements.txt --break-system-packages
+# Create game user and configure server scripting entities
+RUN useradd gameuser
+WORKDIR /home/gameuser
 
-# Add steamcmd directory
-WORKDIR /home/arma3/steamcmd
-RUN wget -qO- 'http://media.steampowered.com/installer/steamcmd_linux.tar.gz' | tar zxf - -C /home/arma3/steamcmd
-RUN chmod 777 /home/arma3/steamcmd
-RUN chmod 777 /home/arma3/steamcmd/linux32/steamcmd
-RUN sh ./steamcmd.sh <<< "exit"
-# RUN sh ./steamcmd.sh
+# Add game directory
+WORKDIR /home/gameuser/steamcmd
 
-# Switch to arma3 user
-WORKDIR /home/arma3
-# USER arma3
+# todo, works exclusively for Steam platform, need to abstract games outside of steam
+RUN wget -qO- "http://media.steampowered.com/installer/steamcmd_linux.tar.gz" | tar zxf - -C /home/gameuser/steamcmd
+RUN chmod 777 /home/gameuser/steamcmd
+RUN chmod 777 /home/gameuser/steamcmd/linux32/steamcmd
+
+# Run install.py
+WORKDIR /home/gameuser
+ CMD ["python3", "cst_game/install.py"]

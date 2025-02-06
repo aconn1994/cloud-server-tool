@@ -1,6 +1,6 @@
 import os
-from cst_game.clients.SteamCMDClient import SteamCMDClient # todo, currently broken, need to understand module building in python
-from cst_game.clients.GameConfigClient import GameConfigClient # todo, currently broken, need to understand module building in python
+from clients.SteamCMDClient import SteamCMDClient
+from clients.GameConfigClient import GameConfigClient
 
 
 def main():
@@ -38,16 +38,16 @@ def main():
     )
 
 
-    # steam_client.install_game(game_server_id)
-    #
-    # if gc_client.workshop_items_dict:
-    #     gc_client.handle_mod_configuration(
-    #         steam_client,
-    #         game_server_id,
-    #         local_game_dir,
-    #         local_mod_dir,
-    #         steam_download_dir
-    #     )
+    steam_client.install_game(game_server_id)
+
+    if gc_client.workshop_items_dict:
+        gc_client.handle_mod_configuration(
+            steam_client,
+            game_server_id,
+            local_game_dir,
+            local_mod_dir,
+            steam_download_dir
+        )
 
 if __name__ == '__main__':
     main()

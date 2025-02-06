@@ -1,7 +1,8 @@
 #!/bin/bash
 sudo apt update -y
-sudo apt-get install docker.io -y
+sudo apt-get install -y docker.io git python3
 
 cd /home/ubuntu
-touch big-harry-balls.py
-echo "Hi Acorn"
+git clone https://github.com/aconn1994/cloud-server-tool.git
+cd lib/python/cst/cst_docker
+python3 build.py

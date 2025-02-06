@@ -36,7 +36,7 @@ class SteamCMDClient:
             print('Steam Username and Password required to download workshop items. Trying to download workshop items anonymously...')
             steamcmd.extend(['+login', 'anonymous'])
         
-        steamcmd.extend('+workshop_download_item', game_id, game_workshop_id, 'validate')
+        steamcmd.extend(['+workshop_download_item', game_id, game_workshop_id, 'validate'])
         steamcmd.extend(['+quit'])
 
         subprocess.call(steamcmd)
