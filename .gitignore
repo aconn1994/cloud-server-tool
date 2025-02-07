@@ -3,3 +3,5 @@
 *.tar
 *.tar.gz
 *.pyc
+/.idea
+/archive
