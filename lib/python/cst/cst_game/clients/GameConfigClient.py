@@ -34,14 +34,6 @@ class GameConfigClient:
                 self.config["mod_file_path"]
             )
 
-    def handle_mod_configuration(
-        self,
-        steam_client: Any,
-        game_server_id: str,
-        local_game_dir: str,
-        local_mod_dir: str,
-        steam_workshop_dir: str,
-    ) -> None:
-        for display_name, workshop_item_id in self.workshop_items_dict.items():
-            steam_client.download_workshop_mod(game_server_id, workshop_item_id)
+    def handle_mod_configuration(self,) -> None:
             # todo, need to test pathing for mod download, add symlinks
+            pass

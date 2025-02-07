@@ -56,6 +56,43 @@ class DockerClient:
             docker_cmd.extend(["-f"])
         subprocess.call(docker_cmd)
 
-    def build_image(self) -> None:
-        # todo, use yaml as config???
-        pass
+    def build_image(self, ports: str, steam_username: str, steam_password: str) -> None:
+        docker_cmd = ["docker"]
+        docker_cmd.extend(["build", "-t", f"{self.workspace_name}:latest"])
+
+        if ports:
+            docker_cmd.extend(["--build-arg", f"PORTS={ports}"])
+        if steam_username and steam_password:
+            docker_cmd.extend(
+                [
+                    "--build-arg",
+                    f"STEAM_USERNAME_ARG={steam_username}",
+                    "--build-arg",
+                    f"STEAM_PASSWORD_ARG={steam_password}",
+                ]
+            )
+        docker_cmd.extend(["lib/python/cst/cst_docker"])
+        subprocess.call(docker_cmd)
+
+    def run_image_as_container(
+        self,
+        ports: str,
+        local_game_installer_path: str,
+        container_game_installer_path: str,
+        interactive_shell: bool = False,
+    ):
+        docker_cmd = ["docker"]
+        docker_cmd.extend(["run", "--name", self.workspace_name])
+
+        for port in ports.split(" "):
+            docker_cmd.extend(["-p", f"{port.split('/')[0]}:{port}"])
+
+        docker_cmd.extend(
+            ["-v", f"{local_game_installer_path}:{container_game_installer_path}"]
+        )
+
+        if interactive_shell:
+            docker_cmd.extend(["-it"])
+
+        docker_cmd.extend([self.workspace_name])
+        subprocess.call(docker_cmd)

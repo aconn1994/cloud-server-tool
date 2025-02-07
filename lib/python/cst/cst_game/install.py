@@ -30,6 +30,7 @@ def main():
     print(game_workshop_id)
 
     gc_client = GameConfigClient(local_game_id)  ## NEEDS PROPER TESTING
+    print(gc_client.workshop_items_dict)
     steam_client = SteamCMDClient(
         local_game_dir, steam_download_dir, steam_username, steam_password
     )
@@ -37,13 +38,9 @@ def main():
     # steam_client.install_game(game_server_id)
 
     if gc_client.workshop_items_dict:
-        gc_client.handle_mod_configuration(
-            steam_client,
-            game_server_id,
-            local_game_dir,
-            local_mod_dir,
-            steam_download_dir,
-        )
+        steam_client.download_workshop_mod(game_server_id, game_workshop_id)
+
+        gc_client.handle_mod_configuration()
 
 
 if __name__ == "__main__":
