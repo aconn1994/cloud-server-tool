@@ -73,7 +73,10 @@ def handle_configuration(config: dict[str, str], steam_client: Any) -> dict[str,
 
     if os.path.exists(os.path.join(game_install_dir, "server.cfg")):
         os.remove(os.path.join(game_install_dir, "server.cfg"))
-    os.symlink(os.path.join(os.getcwd(), "cst_game", configuration_file_path), os.path.join(game_install_dir, "server.cfg"))
+    os.symlink(
+        os.path.join(os.getcwd(), "cst_game", configuration_file_path),
+        os.path.join(game_install_dir, "server.cfg"),
+    )
 
     for workshop_item_name, workshop_item_id in workshop_dict.items():
         if not os.path.exists(mod_dir):
@@ -115,4 +118,3 @@ def launch(config: dict[str, str], workshop_item_names: list[str]) -> None:
 
     print(" ".join(launch_cmd))
     subprocess.call(launch_cmd)
-
