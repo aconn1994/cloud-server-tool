@@ -1,10 +1,14 @@
+from logging import Logger
 import subprocess
 
 
 class DockerClient:
-    def __init__(self, workspace_name: str, exists: bool = False):
+    def __init__(
+        self, workspace_name: str, exists: bool = False, logger: Logger | None = None
+    ):
         self.workspace_name: str = workspace_name
         self.exists: bool = exists
+        self.logger: Logger | None = logger
 
         self.container_id: str | None = None
         self.image_id: str | None = None
@@ -14,40 +18,48 @@ class DockerClient:
             self._get_image_id()
 
     def _get_container_id(self) -> None:
+        self.logger.debug("Getting container ID...")
         docker_cmd = ["docker"]
         docker_cmd.extend(["ps", "-aqf", f"name={self.workspace_name}"])
         self.container_id = subprocess.run(
             docker_cmd, capture_output=True, text=True
         ).stdout.strip()
+        self.logger.debug(f"Container ID: {self.container_id}")
 
     def _get_image_id(self) -> None:
+        self.logger.debug("Getting image ID...")
         docker_cmd = ["docker"]
         docker_cmd.extend(["images", "-q", self.workspace_name])
         self.image_id = subprocess.run(
             docker_cmd, capture_output=True, text=True
         ).stdout.strip()
+        self.logger.debug(f"Image ID: {self.image_id}")
 
     def remove_container(self, force: bool = False) -> None:
-        print(f"Cleaning up {self.workspace_name} container...")
+        self.logger.debug(f"Cleaning up {self.workspace_name} container...")
         docker_cmd = ["docker"]
         docker_cmd.extend(["container", "rm", self.container_id])
         if force:
             docker_cmd.extend("--force")
-        print(f"{self.workspace_name} container has been removed.")
+        self.logger.debug(f"{self.workspace_name} container has been removed.")
 
     def remove_image(self, force: bool = False) -> None:
-        print(f"Cleaning up {self.workspace_name} image...")
+        self.logger.debug(f"Cleaning up {self.workspace_name} image...")
         docker_cmd = ["docker"]
         docker_cmd.extend(["rmi", self.image_id])
         if force:
             docker_cmd.extend("--force")
         subprocess.call(docker_cmd)
-        print(f"{self.workspace_name} image has been removed.")
+        self.logger.debug(f"{self.workspace_name} image has been removed.")
 
     @staticmethod
     def prune(
-        entity_type: str, all_entities: bool = False, force: bool = False
+        entity_type: str,
+        all_entities: bool = False,
+        force: bool = False,
+        logger: Logger | None = None,
     ) -> None:
+        logger.debug(f"Pruning {entity_type}...")
         docker_cmd = ["docker"]
         docker_cmd.extend([entity_type, "prune"])
         if all_entities:
@@ -56,7 +68,14 @@ class DockerClient:
             docker_cmd.extend(["-f"])
         subprocess.call(docker_cmd)
 
-    def build_image(self, ports: str, steam_username: str, steam_password: str) -> None:
+    def build_image(
+        self,
+        ports: str,
+        steam_username: str,
+        steam_password: str,
+        local_game_installer_path: str,
+    ) -> None:
+        self.logger.debug("Building image...")
         docker_cmd = ["docker"]
         docker_cmd.extend(["build", "-t", f"{self.workspace_name}:latest"])
 
@@ -71,8 +90,9 @@ class DockerClient:
                     f"STEAM_PASSWORD_ARG={steam_password}",
                 ]
             )
-        docker_cmd.extend(["lib/python/cst/cst_docker"])
+        docker_cmd.extend([f"{local_game_installer_path}/cst_docker"])
         subprocess.call(docker_cmd)
+        self.logger.debug(f"{self.workspace_name} image has been built.")
 
     def run_image_as_container(
         self,
@@ -81,6 +101,7 @@ class DockerClient:
         container_game_installer_path: str,
         interactive_shell: bool = False,
     ):
+        self.logger.debug("Running Container...")
         docker_cmd = ["docker"]
         docker_cmd.extend(["run", "--name", self.workspace_name])
 
@@ -88,7 +109,10 @@ class DockerClient:
             docker_cmd.extend(["-p", f"{port.split('/')[0]}:{port}"])
 
         docker_cmd.extend(
-            ["-v", f"{local_game_installer_path}:{container_game_installer_path}"]
+            [
+                "-v",
+                f"{local_game_installer_path}/cst_game:{container_game_installer_path}",
+            ]
         )
 
         if interactive_shell:
@@ -96,3 +120,4 @@ class DockerClient:
 
         docker_cmd.extend([self.workspace_name])
         subprocess.call(docker_cmd)
+        self.logger.debug(f"{self.workspace_name} container has been run.")
