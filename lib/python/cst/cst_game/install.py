@@ -10,10 +10,6 @@ def main():
     steam_password: str = os.environ["STEAM_PASSWORD"]
     game_install_dir: str = os.path.join(steamcmd_dir, local_game_dir)
 
-    print(local_game_dir)
-    print(steam_username)
-    print(steam_password)
-
     steam_client = SteamCMDClient(local_game_dir, steam_username, steam_password)
 
     gc_client = GameConfigClient(
