@@ -1,6 +1,7 @@
 import os
 from clients.SteamCMDClient import SteamCMDClient
 from clients.GameConfigClient import GameConfigClient
+from utils import Utils
 
 
 def main():
@@ -12,12 +13,13 @@ def main():
     game_install_dir: str = os.path.join(steamcmd_dir, local_game_dir)
 
     steam_client = SteamCMDClient(local_game_dir, steam_username, steam_password)
-
+    utils = Utils()
     gc_client = GameConfigClient(
         local_game_dir=local_game_dir,
         local_game_assets_dir=local_game_assets_dir,
         game_install_dir=game_install_dir,
         steam_client=steam_client,
+        utils=utils,
     )
     gc_client.execute()
     game_id = gc_client.game_utils.game_id

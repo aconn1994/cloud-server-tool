@@ -9,11 +9,13 @@ class GameConfigClient:
         local_game_assets_dir: str,
         game_install_dir: str,
         steam_client: Any,
+        utils: Any,
     ) -> None:
         self.local_game_dir = local_game_dir
         self.local_game_assets_dir: str = local_game_assets_dir
         self.game_install_dir: str = game_install_dir
         self.steam_client = steam_client
+        self.utils = utils
         self.game_utils: il.ModuleType | None = None
         self.config: dict[str, str] | None = None
         self.workshop_items_dict: dict[str, str] | None = None
@@ -24,9 +26,14 @@ class GameConfigClient:
     #     )
 
     def execute(self) -> None:
-        # todo, inject params for game util class
         self.game_utils = il.import_module(
             f"{self.local_game_dir}.{self.local_game_dir}_utils"
+        )
+        self.game_utils.initialize(
+            self.utils,
+            self.steam_client,
+            self.local_game_assets_dir,
+            self.game_install_dir,
         )
 
     def handle_game_configuration(self) -> None:
@@ -35,4 +42,4 @@ class GameConfigClient:
         )
 
     def launch(self) -> None:
-        self.game_utils.launch(self.config, list(self.workshop_items_dict.keys()))
+        self.game_utils.launch()

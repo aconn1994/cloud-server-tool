@@ -55,6 +55,7 @@ class ArmaThreeUtil:
             self.game_assets_src_path, "mod-list.html"
         )
         self.mods_dst = os.path.join(game_install_dst, "mods")
+        self._execute()
 
     def _parse_mod_file(self, mod_file_path: str) -> None:
         mf = open(mod_file_path, "r")
