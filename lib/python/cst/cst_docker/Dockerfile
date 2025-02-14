@@ -34,4 +34,4 @@ RUN chmod -R 777 /home/gameuser/steamcmd/linux32
 
 # Run install.py
 WORKDIR /home/gameuser
-CMD ["python3", "cst_game/install.py"]
+#CMD ["python3", "cst_game/install.py"]
