@@ -1,6 +1,6 @@
 import os
 from typing import Any
-from arma_three_html_parser import ArmaThreeHTMLParser
+from .arma_three_html_parser import ArmaThreeHTMLParser
 import subprocess
 
 
@@ -55,7 +55,6 @@ class ArmaThreeUtil:
             self.game_assets_src_path, "mod-list.html"
         )
         self.mods_dst = os.path.join(game_install_dst, "mods")
-        self._execute()
 
     def _parse_mod_file(self, mod_file_path: str) -> None:
         mf = open(mod_file_path, "r")
@@ -95,7 +94,7 @@ class ArmaThreeUtil:
         )
         self._key_handler(workshop_item_download_path)
 
-    def _execute(self):
+    def execute(self):
         # Symlink Server Config File
         if os.path.exists(self.configuration_src_file_path):
             self.utils.symlink(

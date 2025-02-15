@@ -22,11 +22,11 @@ def main():
         utils=utils,
     )
     gc_client.execute()
-    game_id = gc_client.game_utils.game_id
+    game_id = gc_client.game_id
 
     steam_client.install_game(game_id)
     gc_client.handle_game_configuration()
-    gc_client.launch()
+    # gc_client.launch()
 
 
 if __name__ == "__main__":
