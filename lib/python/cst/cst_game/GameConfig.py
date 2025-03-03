@@ -1,8 +1,9 @@
-import importlib as il
 from typing import Any
 
+from arma_three.arma_three_util import ArmaThreeUtil
 
-class GameConfigClient:
+
+class GameConfig:
     def __init__(
         self,
         local_game_dir: str,
@@ -16,15 +17,15 @@ class GameConfigClient:
         self.game_install_dir: str = game_install_dir
         self.steam_client = steam_client
         self.utils = utils
-        self.game_utils: il.ModuleType | None = None
+        self.game_utils: Any | None = None
         self.game_id: str | None = None
 
+        self.game_utils_mapper = {
+            "arma_three_util": ArmaThreeUtil,
+        }
+
     def execute(self) -> None:
-        # todo, dynamic import is bugged, may need to do whl packaging and install to docker file
-        self.game_utils = il.import_module(
-            f"{self.local_game_dir}.{self.local_game_dir}_util",
-        )
-        self.game_utils.ArmaThreeUtil(
+        self.game_utils = self.game_utils_mapper[f"{self.local_game_dir}_util"](
             self.utils,
             self.steam_client,
             self.local_game_assets_dir,

@@ -1,6 +1,6 @@
 import os
 from clients.SteamCMDClient import SteamCMDClient
-from clients.GameConfigClient import GameConfigClient
+from GameConfig import GameConfig
 from utils import Utils
 
 
@@ -14,7 +14,7 @@ def main():
 
     steam_client = SteamCMDClient(local_game_dir, steam_username, steam_password)
     utils = Utils()
-    gc_client = GameConfigClient(
+    gc_client = GameConfig(
         local_game_dir=local_game_dir,
         local_game_assets_dir=local_game_assets_dir,
         game_install_dir=game_install_dir,
@@ -26,7 +26,7 @@ def main():
 
     steam_client.install_game(game_id)
     gc_client.handle_game_configuration()
-    # gc_client.launch()
+    gc_client.launch()
 
 
 if __name__ == "__main__":
