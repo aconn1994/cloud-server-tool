@@ -6,3 +6,5 @@
 /.idea
 /archive
 /lib/python/cst/game_assets/arma_three/assets/missions
+.DS_Store
+.coverage
