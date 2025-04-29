@@ -39,3 +39,52 @@ pylint = ">=3.3.4,<4.0.0"
 ruff = ">=0.9.4,<0.10.0"
 pytest = ">=8.3.4,<9.0.0"
 coverage = ">=7.8.0"
+
+[tool.ruff.lint]
+select = [
+    "F401", # unused imports
+    "F841", # unused variables
+    "I",    # isort
+    "INP",  # flake8-no-pep420 == __init__ scanner
+]
+ignore = [
+    "B904",     # use 'raise ... from err'
+    "E111",     # indentation-with-invalid-multiple clashes with formatter
+    "E114",     # indentation-with-invalid-multiple-comment clashes with formatter
+    "E117",     # over-indented clashes with formatter
+    "G004",     # logging statements use f-string
+    "N817",     # CamelCase imported as acronym
+    "N818",     # Exception name should be named with an Error suffix
+    "PD901",    # Avoid using generic variables name 'df' for DataFrames
+    "PLR2004",  # No magic values
+    "W191",     # tab-indentation will conflict with formatter
+]
+unfixable = [
+    "ERA" # do not autoremove commented out code
+]
+
+[tool.ruff.lint.pylint]
+max-args = 12
+
+[tool.ruff.lint.flake8-tidy-imports]
+ban-relative-imports = "all"
+
+[tool.ruff.lint.isort]
+combine-as-imports = true
+
+[tool.ruff.format]
+docstring-code-format = true
+exclude = []
+
+[tool.coverage.run]
+source = ["cloud_server_tool"]
+
+[tool.coverage.report]
+fail_under = 90.00
+precision = 2
+ignore_errors = true
+skip_empty = true
+omit = []
+exclude_lines = [
+    "pragma: no cover"
+]

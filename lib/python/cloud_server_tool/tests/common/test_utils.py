@@ -1,5 +1,6 @@
 import os
 import shutil
+
 from game.common.utils import Utils
 
 utils = Utils()
@@ -8,19 +9,24 @@ dummy_file_name = "DUMMY_FILE.txt"
 dummy_sub_dir_name = "DUMMY_SUBDIR"
 dummy_sub_file_name = "DUMMY_SUBFILE.txt"
 
+
 def test_reformat_string():
     string_to_reformat = "this-is-a-test"
     reformatted_string = "this_is_a_test"
     assert utils.reformat_string(string_to_reformat, "_") == reformatted_string
+
 
 def test_rename_file():
     dummy_file_1_name = "dummy_file_1.txt"
     dummy_file_2_name = "dummy_file_2.txt"
 
     open(dummy_file_1_name, "w")
-    utils.rename(item_path="", item_name=dummy_file_1_name, new_item_name=dummy_file_2_name)
+    utils.rename(
+        item_path="", item_name=dummy_file_1_name, new_item_name=dummy_file_2_name
+    )
     assert os.path.exists(dummy_file_2_name)
     os.remove(dummy_file_2_name)
+
 
 def test_symlink():
     dummy_tmp_src_dir = "tmp_src"
@@ -35,6 +41,7 @@ def test_symlink():
     shutil.rmtree(dummy_tmp_src_dir)
     os.unlink(dummy_tmp_dst_dir)
 
+
 def test_recursive_rename_directory_lower():
     os.mkdir(os.path.join(os.getcwd(), dummy_dir_name))
     open(os.path.join(dummy_dir_name, dummy_file_name), "w")
@@ -45,10 +52,19 @@ def test_recursive_rename_directory_lower():
 
     assert os.path.exists(os.path.join(dummy_dir_name.lower()))
     assert os.path.exists(os.path.join(dummy_dir_name.lower(), dummy_file_name.lower()))
-    assert os.path.exists(os.path.join(dummy_dir_name.lower(), dummy_sub_dir_name.lower()))
-    assert os.path.exists(os.path.join(dummy_dir_name.lower(), dummy_sub_dir_name.lower(), dummy_sub_file_name.lower()))
+    assert os.path.exists(
+        os.path.join(dummy_dir_name.lower(), dummy_sub_dir_name.lower())
+    )
+    assert os.path.exists(
+        os.path.join(
+            dummy_dir_name.lower(),
+            dummy_sub_dir_name.lower(),
+            dummy_sub_file_name.lower(),
+        )
+    )
 
     shutil.rmtree(os.path.join(os.getcwd(), dummy_dir_name.lower()))
+
 
 def test_recursive_rename_directory_upper():
     os.mkdir(os.path.join(os.getcwd(), dummy_dir_name))
@@ -60,7 +76,15 @@ def test_recursive_rename_directory_upper():
 
     assert os.path.exists(os.path.join(dummy_dir_name.upper()))
     assert os.path.exists(os.path.join(dummy_dir_name.upper(), dummy_file_name.upper()))
-    assert os.path.exists(os.path.join(dummy_dir_name.upper(), dummy_sub_dir_name.upper()))
-    assert os.path.exists(os.path.join(dummy_dir_name.upper(), dummy_sub_dir_name.upper(), dummy_sub_file_name.upper()))
+    assert os.path.exists(
+        os.path.join(dummy_dir_name.upper(), dummy_sub_dir_name.upper())
+    )
+    assert os.path.exists(
+        os.path.join(
+            dummy_dir_name.upper(),
+            dummy_sub_dir_name.upper(),
+            dummy_sub_file_name.upper(),
+        )
+    )
 
     shutil.rmtree(os.path.join(os.getcwd(), dummy_dir_name.lower()))
