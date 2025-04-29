@@ -4,7 +4,7 @@ from .arma_three_html_parser import ArmaThreeHTMLParser
 import subprocess
 
 
-class ArmaThreeUtil:
+class GameUtil:
     def __init__(
         self,
         utils: Any,

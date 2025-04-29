@@ -1,6 +1,5 @@
 from typing import Any
-
-from arma_three.arma_three_util import ArmaThreeUtil
+from game_assets.game_util import GameUtil
 
 
 class GameConfig:
@@ -20,12 +19,9 @@ class GameConfig:
         self.game_utils: Any | None = None
         self.game_id: str | None = None
 
-        self.game_utils_mapper = {
-            "arma_three_util": ArmaThreeUtil,
-        }
-
     def execute(self) -> None:
-        self.game_utils = self.game_utils_mapper[f"{self.local_game_dir}_util"](
+        print("Initializing Game Utility...")
+        self.game_utils = GameUtil(
             self.utils,
             self.steam_client,
             self.local_game_assets_dir,
@@ -34,6 +30,7 @@ class GameConfig:
         self.game_id = self.game_utils.game_id
 
     def handle_game_configuration(self) -> None:
+        print("Executing game setup.....")
         self.game_utils.execute()
 
     def launch(self) -> None:

@@ -9,6 +9,20 @@
           </mappings>
         </serverdata>
       </paths>
+      <paths name="root@localhost:2223 password (2)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/root/cloud-server-tool" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="root@localhost:2223 password (3)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/root/cloud-server-tool" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
     </serverData>
   </component>
 </project>

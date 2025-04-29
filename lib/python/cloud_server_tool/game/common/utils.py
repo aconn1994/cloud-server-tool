@@ -11,20 +11,6 @@ class Utils:
         return re.sub(pattern, repl_char, val)
 
     @staticmethod
-    def rename_lowercase(item_path: str, item_name: str) -> None:
-        os.rename(
-            os.path.join(item_path, item_name),
-            os.path.join(item_path, item_name.lower()),
-        )
-
-    @staticmethod
-    def rename_uppercase(item_path: str, item_name: str) -> None:
-        os.rename(
-            os.path.join(item_path, item_name),
-            os.path.join(item_path, item_name.upper()),
-        )
-
-    @staticmethod
     def rename(item_path: str, item_name: str, new_item_name: str) -> None:
         os.rename(
             os.path.join(item_path, item_name), os.path.join(item_path, new_item_name)
@@ -44,11 +30,11 @@ class Utils:
             if os.path.isdir(os.path.join(directory, item)):
                 self.recursive_rename_directory(os.path.join(directory, item), case)
                 if case == "lower":
-                    self.rename_lowercase(directory, item)
+                    self.rename(directory, item, item.lower())
                 elif case == "upper":
-                    self.rename_uppercase(directory, item)
+                    self.rename(directory, item, item.upper())
             else:
                 if case == "lower":
-                    self.rename_lowercase(directory, item)
+                    self.rename(directory, item, item.lower())
                 elif case == "upper":
-                    self.rename_uppercase(directory, item)
+                    self.rename(directory, item, item.upper())

@@ -5,4 +5,4 @@
 *.pyc
 /.idea
 /archive
-/lib/python/cst/cst_game/arma_three/assets/missions
+/lib/python/cst/game_assets/arma_three/assets/missions

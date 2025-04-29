@@ -11,10 +11,10 @@ RUN python3 -m pip install --no-cache-dir poetry
 ENV PATH="${PATH}:/root/.local/bin"
 
 ARG CICD_PATH=.cicd/python
-ARG CST_PATH=lib/python/cloud_server_tool
+ARG CST_PATH=lib/python/cst
 
 ARG CICD_NAME=cicd
-ARG CST_NAME=cloud_server_tool
+ARG CST_NAME=cst
 
 WORKDIR /tmp
 COPY ${CICD_PATH}/pyproject.toml ${CICD_PATH}/poetry.lock /tmp/${CICD_NAME}/

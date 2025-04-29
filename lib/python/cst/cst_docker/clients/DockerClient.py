@@ -1,3 +1,4 @@
+import os
 import subprocess
 
 
@@ -81,7 +82,6 @@ class DockerClient:
     def run_image_as_container(
         self,
         ports: str,
-        local_game_installer_path: str,
         container_game_installer_path: str,
         interactive_shell: bool = False,
     ):
@@ -94,7 +94,7 @@ class DockerClient:
         docker_cmd.extend(
             [
                 "-v",
-                f"{local_game_installer_path}/cst_game:{container_game_installer_path}",
+                f"{os.getcwd()}/dist:{container_game_installer_path}",
             ]
         )
 
