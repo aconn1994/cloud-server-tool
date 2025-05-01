@@ -16,7 +16,7 @@ EXPOSE ${PORTS}
 # Update Ubuntu to latest version/Install additional dependencies
 RUN apt-get update && apt-get -y install python3 wget lib32gcc-s1 lib32stdc++6
 
-# Add game directory
+# Add cst_game directory
 RUN useradd gameuser
 WORKDIR /home/gameuser
 

@@ -30,7 +30,7 @@ class GameConfig:
         self.game_id = self.game_utils.game_id
 
     def handle_game_configuration(self) -> None:
-        print("Executing game setup.....")
+        print("Executing cst_game setup.....")
         self.game_utils.execute()
 
     def launch(self) -> None:

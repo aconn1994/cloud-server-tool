@@ -1,7 +1,7 @@
 import os
 import shutil
 
-from game.common.utils import Utils
+from cst_game.common.utils import Utils
 
 utils = Utils()
 dummy_dir_name = "DUMMY_DIR"

@@ -17,7 +17,7 @@ parser.add_argument(
 parser.add_argument(
     "--steam-password", "-sp", help="Steam password", required=True, default=None
 )
-parser.add_argument("--game-name", "-gn", help="Game Name", required=True)
+parser.add_argument("--cst_game-name", "-gn", help="Game Name", required=True)
 
 
 def prep_cst_game_dist_folder(
@@ -39,7 +39,7 @@ def main():
     steam_username = args.steam_username
     steam_password = args.steam_password
     game_name = args.game_name
-    workspace = "game-server"
+    workspace = "cst_game-server"
     clean_up = args.clean_up
     local_game_installer_path = os.path.join(os.getcwd(), "lib", "python", "cst")
     container_game_installer_path = "/home/gameuser/cst_game"
