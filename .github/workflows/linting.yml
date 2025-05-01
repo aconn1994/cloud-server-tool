@@ -1,8 +1,8 @@
 name: Linting (Python, Terraform)
 
 on:
+#  workflow_call:
   workflow_dispatch:
-  workflow_call:
     inputs:
       aws_account_id:
         description: AWS Account Id
