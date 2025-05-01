@@ -31,7 +31,7 @@ jobs:
      - name: Step Terraform with specific version
        uses: hashicorp/setup-terraform@v2
        with:
-          terraform_version: 'latest'
+          terraform_version: '1.11.4'
 
      - name: Terraform init
        id: init
