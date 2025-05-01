@@ -27,6 +27,10 @@ jobs:
   image-build:
     runs-on: ubuntu-latest
 
+    permissions:
+      id-token: write
+      contents: read
+
     outputs:
       image_tag: ${{ steps.build-publish.outputs.image_tag }}
       full_image: ${{ steps.build-publish.outputs.full_image }}
