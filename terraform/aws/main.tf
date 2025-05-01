@@ -15,6 +15,10 @@ terraform {
   }
 }
 
+provider "aws" {
+  region = local.region
+}
+
 module "s3" {
   source               = "./modules/s3"
   required_common_tags = local.required_common_tags

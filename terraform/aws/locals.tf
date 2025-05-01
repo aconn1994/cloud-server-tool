@@ -1,4 +1,5 @@
 locals {
+  region = "us-east-1"
 
   required_common_tags = {
     Owner          = "Acorn"
