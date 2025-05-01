@@ -4,6 +4,9 @@ on:
 #  workflow_call:
   workflow_dispatch:
     inputs:
+      aws_account_id:
+        description: AWS Account Id
+        type: string
       aws_region:
         description: Target AWS Region
         type: string
@@ -41,7 +44,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: login-ecr
     container:
-      image: "${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ inputs.aws_region }}.amazonaws.com/${{ inputs.ecr_repo_name }}:${{ inputs.image_tag }}"
+      image: "${{ inputs.aws_account_id }}.dkr.ecr.${{ inputs.aws_region }}.amazonaws.com/${{ inputs.ecr_repo_name }}:${{ inputs.image_tag }}"
       credentials:
         username: ${{ needs.login-ecr.outputs.docker_username }}
         password: ${{ needs.login-ecr.outputs.docker_password }}
