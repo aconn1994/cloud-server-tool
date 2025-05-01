@@ -6,11 +6,6 @@ authors = [
     {name = "Adam Connolly",email = "45522351+aconn1994@users.noreply.github.com"}
 ]
 requires-python = ">=3.13"
-dependencies = [
-    "pylint (>=3.3.4,<4.0.0)",
-    "ruff (>=0.9.4,<0.10.0)",
-    "pytest (>=8.3.4,<9.0.0)"
-]
 
 
 [build-system]
@@ -34,10 +29,10 @@ python = ">=3.13"
 optional = true
 
 [tool.poetry.group.dev.dependencies]
-pylint = ">=3.3.4,<4.0.0"
 ruff = ">=0.9.4,<0.10.0"
 pytest = ">=8.3.4,<9.0.0"
 coverage = ">=7.8.0"
+mypy = "1.15.0"
 
 [tool.ruff.lint]
 select = [
@@ -74,6 +69,15 @@ combine-as-imports = true
 [tool.ruff.format]
 docstring-code-format = true
 exclude = []
+
+[tool.mypy]
+python_version = "3.13"
+disallow_untyped_defs = true
+ignore_missing_imports = true
+warn_return_any = true
+warn_unsuded_configs = true
+strict_optional = false
+exclude = '/tests/'
 
 [tool.coverage.run]
 source = ["cst_cicd"]
