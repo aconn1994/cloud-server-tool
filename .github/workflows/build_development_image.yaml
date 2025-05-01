@@ -11,6 +11,10 @@ on:
         description: Docker build directory (default = '.')
         default: "local_env/images/base_image"
         type: string
+      ecr_repo_name:
+        description: Name of ECR Repo in AWS
+        type: string
+        default: "cst_base"
       image_tag:
         description: Tag to apply to images
         type: string
@@ -55,7 +59,7 @@ jobs:
         shell: bash
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: ${{ env.ECR_REPO_NAME }}
+          ECR_REPOSITORY: ${{ inputs.image_tag }}
           IMAGE_TAG: ${{ inputs.image_tag }}
         run: |
           docker build "${{ inputs.docker_build_dir }}" -f "${{ inputs.dockerfile_path }}" -t "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
