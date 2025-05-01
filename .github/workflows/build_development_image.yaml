@@ -9,7 +9,7 @@ on:
         default: "local_env/images/base_image/Dockerfile"
       docker_build_dir:
         description: Docker build directory (default = '.')
-        default: "local_env/images/base_image"
+        default: "."
         type: string
       ecr_repo_name:
         description: Name of ECR Repo in AWS
