@@ -1,7 +1,7 @@
 variable "region" {
   description = "Value for AWS region to deploy resources"
-  type = string
-  default = "us-east-1"
+  type        = string
+  default     = "us-east-1"
 }
 
 variable "required_tags" {
