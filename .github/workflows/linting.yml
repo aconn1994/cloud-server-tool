@@ -46,9 +46,8 @@ jobs:
     container:
       image: "${{ inputs.aws_account_id }}.dkr.ecr.${{ inputs.aws_region }}.amazonaws.com/${{ inputs.ecr_repo_name }}:${{ inputs.image_tag }}"
       credentials:
-        credentials:
-          username: ${{ needs.login-to-amazon-ecr.outputs.docker_username }}
-          password: ${{ needs.login-to-amazon-ecr.outputs.docker_password }}
+        username: ${{ needs.login-to-amazon-ecr.outputs.docker_username }}
+        password: ${{ needs.login-to-amazon-ecr.outputs.docker_password }}
     steps:
       - uses: actions/checkout@v4
       - name: Terraform Format
