@@ -5,8 +5,7 @@ on:
     branches:
       - main
     paths:
-      - terraform/ec2/**
-      - terraform/ecr/**
+      - terraform/**
 
 env:
  # verbosity setting for Terraform logs

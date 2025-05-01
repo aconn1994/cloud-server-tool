@@ -6,7 +6,7 @@ resource "aws_instance" "game_server_tf" {
   associate_public_ip_address = true
 
   subnet_id = aws_subnet.subnet-uno.id
-  user_data = file("startup.sh")
+  # user_data = file("startup.sh")
 
   tags = {
     Name       = "Acorn's Game Server ${var.environment} ${var.build_type}"
