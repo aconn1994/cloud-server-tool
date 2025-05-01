@@ -19,9 +19,6 @@ on:
         description: Tag to apply to images
         type: string
         default: cst_base
-      aws_account_id:
-        description: AWS Account Id
-        type: string
       aws_region:
         description: Target AWS Region
         type: string
@@ -52,7 +49,7 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
         with:
-          registries: ${{ inputs.aws_account_id }}
+          registries: ${{ secrets.AWS_ACCOUNT_ID }}
 
       - name: Build, tag and push image to Amazon ECR
         id: build-publish
