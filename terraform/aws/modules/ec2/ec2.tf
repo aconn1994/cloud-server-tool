@@ -8,9 +8,9 @@ resource "aws_instance" "game_server_tf" {
   subnet_id = aws_subnet.subnet-uno.id
   # user_data = file("startup.sh")
 
-  tags = {
+  tags = merge(var.required_common_tags, {
     Name       = "Acorn's Game Server ${var.environment} ${var.build_type}"
     Build_Type = var.build_type
-  }
+  })
 
 }
