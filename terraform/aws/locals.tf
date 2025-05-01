@@ -1,9 +1,9 @@
 locals {
 
   required_common_tags = {
-    Owner   = "Adam Connolly (Acorn)"
-    Project = "Cloud Server Tool"
-    Purpose = "Spin up game servers"
+    Owner          = "Acorn"
+    Project        = "Cloud Server Tool"
+    ProjectPurpose = "Spin up game servers"
   }
 
 }

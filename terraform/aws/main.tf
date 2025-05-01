@@ -7,6 +7,17 @@ terraform {
   }
 
   required_version = ">= 1.2.0"
+
+  backend "s3" {
+    bucket = "cst-resources"
+    key    = "terraform/terraform.tfstate"
+    region = "us-east-1"
+  }
+}
+
+module "s3" {
+  source               = "./modules/s3"
+  required_common_tags = local.required_common_tags
 }
 
 module "ec2" {
@@ -15,11 +26,12 @@ module "ec2" {
 }
 
 module "ecr" {
-  source       = "./modules/ecr"
-  PYTHON_IMAGE = "dummy_image_tag"
+  source                 = "./modules/ecr"
+  DEVELOPMENT_IMAGE_NAME = "cst_base"
   required_tags = {
-    RepoType   = "Development"
-    AccessType = "Private"
+    RepoType    = "Development"
+    AccessType  = "Private"
+    RepoPurpose = "DevOps image repository for local and cicd"
   }
   required_common_tags = local.required_common_tags
 }

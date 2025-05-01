@@ -9,7 +9,7 @@ variable "required_tags" {
   type = object({
     RepoType   = string # Development | Game
     AccessType = string # Public | Private
-
+    RepoPurpose = string
   })
 }
 
@@ -18,7 +18,7 @@ variable "required_common_tags" {
   type        = map(string)
 }
 
-variable "PYTHON_IMAGE" {
-  description = "ECR Repo name from container"
+variable "DEVELOPMENT_IMAGE_NAME" {
+  description = "ECR Repo name from development image name"
   type        = string
 }
