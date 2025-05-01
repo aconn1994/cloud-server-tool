@@ -10,12 +10,12 @@ terraform {
 }
 
 module "ec2" {
-  source = "./modules/ec2"
+  source               = "./modules/ec2"
   required_common_tags = local.required_common_tags
 }
 
 module "ecr" {
-  source = "./modules/ecr"
+  source       = "./modules/ecr"
   PYTHON_IMAGE = "dummy_image_tag"
   required_tags = {
     RepoType   = "Development"
