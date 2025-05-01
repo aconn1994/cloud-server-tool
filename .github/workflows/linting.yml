@@ -43,7 +43,7 @@ jobs:
       docker_username: ${{ steps.login-ecr.outputs.docker_username_123456789012_dkr_ecr_us_east_1_amazonaws_com }}
       docker_password: ${{ steps.login-ecr.outputs.docker_password_123456789012_dkr_ecr_us_east_1_amazonaws_com }}
   linter:
-    runs-on:
+    runs-on: ubuntu-latest
     container:
       image: "${{ inputs.aws_account_id }}.dkr.ecr.${{ inputs.aws_region }}.amazonaws.com/${{ inputs.ecr_repo_name }}:${{ inputs.image_tag }}"
       credentials:
