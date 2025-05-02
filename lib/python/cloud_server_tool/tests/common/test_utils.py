@@ -87,4 +87,4 @@ def test_recursive_rename_directory_upper():
         )
     )
 
-    shutil.rmtree(os.path.join(os.getcwd(), dummy_dir_name.lower()))
+    shutil.rmtree(os.path.join(os.getcwd(), dummy_dir_name.upper()))
