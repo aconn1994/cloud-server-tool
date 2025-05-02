@@ -38,7 +38,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Python Testing CICD package
         working-directory: .
-        run: /bin/bash .cicd/bash/testers/coverage-pytest.sh lib/python/cloud_server_tool lib/python/cloud_server_tool cloud_server_tool pyproject.toml /root/venvs/cloud_server_tool/bin/python3
+        run: /bin/bash .cicd/bash/testers/coverage-pytest.sh .cicd/python .cicd/python cst_cicd pyproject.toml python3
         continue-on-error: true
       - name: Python Testing cloud_server_tool package
         working-directory: .

@@ -9,4 +9,4 @@ set -euo pipefail
 #/bin/bash .cicd/bash/linters/python-format.sh .cicd/python lib/python/cst cst "" lib/python/cst/pyproject.toml /root/venvs/cst/bin/python3
 
 # cloud_server_tool
-/bin/bash .cicd/bash/linters/python-format.sh .cicd/python lib/python/cloud_server_tool cloud_server_tool "" lib/python/cloud_server_tool/pyproject.toml /root/venvs/cloud_server_tool/bin/python3
+/bin/bash .cicd/bash/linters/python-format.sh lib/python/cloud_server_tool lib/python/cloud_server_tool cloud_server_tool "" lib/python/cloud_server_tool/pyproject.toml /root/venvs/cloud_server_tool/bin/python3
