@@ -3,51 +3,12 @@ name: Linting (Python, Terraform)
 on:
 #  workflow_call:
   workflow_dispatch:
-    inputs:
-      aws_account_id:
-        description: AWS Account Id
-        type: string
-      aws_region:
-        description: Target AWS Region
-        type: string
-        default: "us-east-1"
-      ecr_repo_name:
-        description: Name of ECR Repo in AWS
-        type: string
-        default: "cst_base"
-      image_tag:
-        description: Tag to apply to images
-        type: string
-        default: "cst_base"
 
 jobs:
-  login-ecr:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ inputs.aws_region }}
-
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v2
-        with:
-          mask-password: 'true'
-    outputs:
-      docker_username: ${{ steps.login-ecr.outputs.docker_username_123456789012_dkr_ecr_us_east_1_amazonaws_com }}
-      docker_password: ${{ steps.login-ecr.outputs.docker_password_123456789012_dkr_ecr_us_east_1_amazonaws_com }}
   linter:
     runs-on: ubuntu-latest
-    needs: login-ecr
     container:
-      image: "${{ inputs.aws_account_id }}.dkr.ecr.${{ inputs.aws_region }}.amazonaws.com/${{ inputs.ecr_repo_name }}:${{ inputs.image_tag }}"
-      credentials:
-        username: ${{ needs.login-ecr.outputs.docker_username }}
-        password: ${{ needs.login-ecr.outputs.docker_password }}
+      image: ghcr.io/aconn1994/cst_base:main
     steps:
       - uses: actions/checkout@v4
       - name: Terraform Format
@@ -56,9 +17,9 @@ jobs:
       - name: Terraform Validate
         working-directory: ./terraform/aws
         run: terraform validate -no-color
-      - name: Python Lint
-        working-directory: .cicd/bash/linters
-        run: sh python-lint.sh
-      - name: Python Formatting
-        working-directory: .cicd/bash/linters
-        run: sh python-format.sh
+      - name: Python Linting/Formatting Check CICD
+        working-directory: .
+        run: /bin/bash .cicd/bash/linters/python-format.sh .cicd/python .cicd/python cicd "check_arg" .cicd/python/pyproject.toml python3
+      - name: Python Linting/Formatting Check CICD
+        working-directory: .
+        run: /bin/bash .cicd/python lib/python/cloud_server_tool cloud_server_tool "check_arg" lib/python/cloud_server_tool/pyproject.toml /root/venvs/cloud_server_tool/bin/python3

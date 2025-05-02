@@ -45,5 +45,5 @@ class SteamCMDClient:
 
         subprocess.call(steamcmd)
 
-    def launch_server(self):
+    def launch_server(self) -> None:
         pass

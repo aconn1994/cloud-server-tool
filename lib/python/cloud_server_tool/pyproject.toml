@@ -75,7 +75,7 @@ python_version = "3.13"
 disallow_untyped_defs = true
 ignore_missing_imports = true
 warn_return_any = true
-warn_unsuded_configs = true
+warn_unused_configs = true
 strict_optional = false
 exclude = '/tests/'
 
