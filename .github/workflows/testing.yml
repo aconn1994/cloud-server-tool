@@ -1,0 +1,29 @@
+name: Testing (Python, Terraform)
+
+on:
+  workflow_call:
+  workflow_dispatch:
+
+jobs:
+  linter:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/aconn1994/cst_base:main
+    steps:
+      - uses: actions/checkout@v4
+      - name: Initialize Terraform...
+        working-directory: ./terraform/aws
+        run: terraform init
+        continue-on-error: true
+      - name: Validating Terraform
+        working-directory: ./terraform/aws
+        run: terraform validate -no-color
+        continue-on-error: true
+#      - name: Python Testing CICD package
+#        working-directory: .
+#        run: /bin/bash .cicd/bash/testers/coverage-pytest.sh lib/python/cloud_server_tool lib/python/cloud_server_tool cloud_server_tool pyproject.toml /root/venvs/cloud_server_tool/bin/python3
+#        continue-on-error: true
+      - name: Python Testing cloud_server_tool package
+        working-directory: .
+        run: /bin/bash .cicd/bash/testers/coverage-pytest.sh lib/python/cloud_server_tool lib/python/cloud_server_tool cloud_server_tool pyproject.toml /root/venvs/cloud_server_tool/bin/python3
+        continue-on-error: true
