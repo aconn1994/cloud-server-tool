@@ -5,12 +5,16 @@ on:
   workflow_dispatch:
 
 jobs:
-  tester:
+  terraform-tester:
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/aconn1994/cst_base:main
     steps:
       - uses: actions/checkout@v4
+      - name: Step Terraform with specific version
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: '1.11.4'
       - name: Initialize Terraform...
         working-directory: ./terraform/aws
         run: terraform init
@@ -19,10 +23,16 @@ jobs:
         working-directory: ./terraform/aws
         run: terraform validate -no-color
         continue-on-error: true
-#      - name: Python Testing CICD package
-#        working-directory: .
-#        run: /bin/bash .cicd/bash/testers/coverage-pytest.sh lib/python/cloud_server_tool lib/python/cloud_server_tool cloud_server_tool pyproject.toml /root/venvs/cloud_server_tool/bin/python3
-#        continue-on-error: true
+  python-tester:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/aconn1994/cst_base:main
+    steps:
+      - uses: actions/checkout@v4
+      - name: Python Testing CICD package
+        working-directory: .
+        run: /bin/bash .cicd/bash/testers/coverage-pytest.sh lib/python/cloud_server_tool lib/python/cloud_server_tool cloud_server_tool pyproject.toml /root/venvs/cloud_server_tool/bin/python3
+        continue-on-error: true
       - name: Python Testing cloud_server_tool package
         working-directory: .
         run: /bin/bash .cicd/bash/testers/coverage-pytest.sh lib/python/cloud_server_tool lib/python/cloud_server_tool cloud_server_tool pyproject.toml /root/venvs/cloud_server_tool/bin/python3
