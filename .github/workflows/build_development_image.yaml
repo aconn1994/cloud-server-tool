@@ -11,26 +11,41 @@ on:
         description: Docker build directory (default = '.')
         default: "."
         type: string
-      gcr_repo_path:
-        description: GCR path
-        type: string
-        default: cst_development_images
       image_tag:
         description: Tag to apply to images
         type: string
         default: cst_base
+
+env:
+  REGISTRY: ghcr.io
 
 jobs:
   image-build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Build, tag and push image to Amazon ECR
-        id: build-publish
-        shell: bash
-        run: |
-          docker build "${{ inputs.docker_build_dir }}" -f "${{ inputs.dockerfile_path }}" -t "${{ inputs.gcr_repo_path }}:${{ inputs.image_tag }}"
-          docker push "ghcr.io/aconn1994/${{ inputs.gcr_repo_path }}:${{ inputs.image_tag }}"
-          echo "Image ${{ inputs.image_tag }} is pushed to ghcr.io/aconn1994/${{ inputs.gcr_repo_path }}"
-          echo "image_tag=${{ inputs.image_tag }}" 
-          echo "full_image=ghcr.io/aconn1994/${{ inputs.gcr_repo_path }}:${{ inputs.image_tag }}"
+      - name: Log in to the Container registry
+        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+        with:
+          images: ${{ env.REGISTRY }}/${{ inputs.image_tag }}
+      - name: Build and push Docker image
+        id: push
+        uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+      - name: Generate artifact attestation
+        uses: actions/attest-build-provenance@v2
+        with:
+          subject-name: ${{ env.REGISTRY }}/${{ inputs.image_tag }}
+          subject-digest: ${{ steps.push.outputs.digest }}
+          push-to-registry: true
