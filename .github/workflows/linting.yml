@@ -20,9 +20,9 @@ jobs:
 #      - name: Terraform Validate
 #        working-directory: ./terraform/aws
 #        run: terraform validate -no-color
-      - name: Python Linting/Formatting Check CICD
+      - name: Python Linting/Formatting Check CICD package
         working-directory: .
         run: /bin/bash .cicd/bash/linters/python-format.sh .cicd/python .cicd/python cicd "check_arg" .cicd/python/pyproject.toml python3
-      - name: Python Linting/Formatting Check CICD
+      - name: Python Linting/Formatting Check cloud_server_tool package
         working-directory: .
-        run: /bin/bash .cicd/python lib/python/cloud_server_tool cloud_server_tool "check_arg" lib/python/cloud_server_tool/pyproject.toml /root/venvs/cloud_server_tool/bin/python3
+        run: /bin/bash .cicd/bash/linters/python-format.sh .cicd/python lib/python/cloud_server_tool cloud_server_tool "check_arg" lib/python/cloud_server_tool/pyproject.toml /root/venvs/cloud_server_tool/bin/python3
