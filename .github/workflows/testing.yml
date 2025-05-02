@@ -7,8 +7,10 @@ on:
 jobs:
   terraform-tester:
     runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/aconn1994/cst_base:main
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./terraform/aws
     steps:
       - uses: actions/checkout@v4
       - name: Step Terraform with specific version
@@ -16,11 +18,9 @@ jobs:
         with:
           terraform_version: '1.11.4'
       - name: Initialize Terraform...
-        working-directory: ./terraform/aws
         run: terraform init
         continue-on-error: true
       - name: Validating Terraform
-        working-directory: ./terraform/aws
         run: terraform validate -no-color
         continue-on-error: true
   python-tester:
