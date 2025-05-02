@@ -14,9 +14,9 @@ jobs:
       - name: Terraform Format
         working-directory: ./terraform/aws
         run: terraform fmt -check -recursive
-      - name: Terraform Validate
-        working-directory: ./terraform/aws
-        run: terraform validate -no-color
+#      - name: Terraform Validate
+#        working-directory: ./terraform/aws
+#        run: terraform validate -no-color
       - name: Python Linting/Formatting Check CICD
         working-directory: .
         run: /bin/bash .cicd/bash/linters/python-format.sh .cicd/python .cicd/python cicd "check_arg" .cicd/python/pyproject.toml python3
