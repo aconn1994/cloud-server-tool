@@ -7,8 +7,8 @@ variable "region" {
 variable "required_tags" {
   description = "ECR specific tags"
   type = object({
-    RepoType   = string # Development | Game
-    AccessType = string # Public | Private
+    RepoType    = string # Development | Game
+    AccessType  = string # Public | Private
     RepoPurpose = string
   })
 }
