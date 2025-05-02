@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  linter:
+  tester:
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/aconn1994/cst_base:main
