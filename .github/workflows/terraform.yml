@@ -2,11 +2,11 @@ name: "Terraform Management Pipeline using Github Actions"
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
-    paths:
-      - terraform/aws/**
+#  push:
+#    branches:
+#      - main
+#    paths:
+#      - terraform/aws/**
 
 env:
  # verbosity setting for Terraform logs
