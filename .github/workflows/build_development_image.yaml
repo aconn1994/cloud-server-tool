@@ -30,7 +30,7 @@ jobs:
         shell: bash
         run: |
           docker build "${{ inputs.docker_build_dir }}" -f "${{ inputs.dockerfile_path }}" -t "${{ inputs.gcr_repo_path }}:${{ inputs.image_tag }}"
-          docker push "ghcr.io/${{ inputs.gcr_repo_path }}:${{ inputs.image_tag }}"
-          echo "Image ${{ inputs.image_tag }} is pushed to ghcr.io/${{ inputs.gcr_repo_path }}"
+          docker push "ghcr.io/aconn1994/${{ inputs.gcr_repo_path }}:${{ inputs.image_tag }}"
+          echo "Image ${{ inputs.image_tag }} is pushed to ghcr.io/aconn1994/${{ inputs.gcr_repo_path }}"
           echo "image_tag=${{ inputs.image_tag }}" 
-          echo "full_image=ghcr.io/${{ inputs.gcr_repo_path }}:${{ inputs.image_tag }}"
+          echo "full_image=ghcr.io/aconn1994/${{ inputs.gcr_repo_path }}:${{ inputs.image_tag }}"
