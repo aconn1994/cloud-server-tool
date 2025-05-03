@@ -40,7 +40,7 @@ fi
 set -e
 
 # Display Results
-cat "$TMP_DIR"/"${LOG_ALIAS}"*.log
+cat "$TMP_DIR"/"${LOG_ALIAS}"*
 
 
 # Return Exit Code
