@@ -95,6 +95,3 @@ omit = [
 exclude_lines = [
     "pragma: no cover"
 ]
-
-[tool.coverage.html]
-directory = "htmlcov"
