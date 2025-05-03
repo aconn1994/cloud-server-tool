@@ -22,4 +22,3 @@ jobs:
       - name: Python Linting/Formatting Check cloud_server_tool package
         working-directory: .
         run: /bin/bash .cicd/bash/linters/python-format.sh lib/python/cloud_server_tool lib/python/cloud_server_tool cloud_server_tool "check_arg" lib/python/cloud_server_tool/pyproject.toml /root/venvs/cloud_server_tool/bin/python3
-        continue-on-error: true
