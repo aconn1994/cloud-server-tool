@@ -42,4 +42,4 @@ jobs:
 #        continue-on-error: true
       - name: Python Testing cloud_server_tool package
         working-directory: .
-        run: /bin/bash .cicd/bash/testers/coverage-pytest.sh lib/python/cloud_server_tool lib/python/cloud_server_tool cloud_server_tool pyproject.toml /root/venvs/cloud_server_tool/bin/python3
+        run: /bin/bash .cicd/bash/testers/coverage-pytest.sh lib/python/cloud_server_tool lib/python/cloud_server_tool cloud_server_tool lib/python/cloud_server_tool/pyproject.toml /root/venvs/cloud_server_tool/bin/python3
