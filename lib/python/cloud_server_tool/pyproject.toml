@@ -82,3 +82,16 @@ exclude = '/tests/'
 [tool.coverage.run]
 source = ["cst_game"]
 
+[tool.coverage.report]
+fail_under = 90.00
+precision = 2
+ignore_errors = true
+skip_empty = true
+omit = [
+    "*/tests/*",
+    "*/common/clients/*", # covered in cicd testing
+    "*/**/setup.py", # covered in cicd testing
+]
+exclude_lines = [
+    "pragma: no cover"
+]
