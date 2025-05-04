@@ -17,7 +17,7 @@ cd "$MODULE"
 set +e
 $PYTHON_INTERPRETER -m coverage run --rcfile="$PYPROJECT_TOML_PATH" -m pytest -c "$PYPROJECT_TOML_PATH" -ra -q -v -m "not excluded" > "$TMP_DIR/${LOG_ALIAS}_pytest.log"
 coverage_run_exit_status=$?
-$PYTHON_INTERPRETER -m coverage report --rcfile="$PYPROJECT_TOML_PATH" > "$TMP_DIR/${LOG_ALIAS}_coverage.log"
+$PYTHON_INTERPRETER -m coverage report -i --rcfile="$PYPROJECT_TOML_PATH" > "$TMP_DIR/${LOG_ALIAS}_coverage.log"
 coverage_report_exit_status=$?
 $PYTHON_INTERPRETER -m coverage html # -d "$TMP_DIR/${LOG_ALIAS}_coverage"
 mv htmlcov "$TMP_DIR/${LOG_ALIAS}_coverage"
