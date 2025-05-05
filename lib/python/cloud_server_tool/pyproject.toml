@@ -79,6 +79,9 @@ warn_unused_configs = true
 strict_optional = false
 exclude = '/tests/'
 
+[tool.pytest.ini_options]
+markers = ["excluded: test to not run with coverage"]
+
 [tool.coverage.run]
 source = ["cst_game"]
 
