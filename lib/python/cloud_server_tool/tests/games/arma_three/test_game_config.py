@@ -1,4 +1,5 @@
 import getpass
+
 from cst_game.games.arma_three.game_config import GameConfig
 
 

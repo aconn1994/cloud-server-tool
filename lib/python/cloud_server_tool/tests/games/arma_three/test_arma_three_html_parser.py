@@ -1,7 +1,9 @@
 import os
 from typing import Any
-from cst_game.games.arma_three.arma_three_html_parser import ArmaThreeHTMLParser
+
 from cst_game.common.abstract_game_setup import AbstractGameSetup
+from cst_game.games.arma_three.arma_three_html_parser import ArmaThreeHTMLParser
+
 
 class DummyArmaThreeSetup(AbstractGameSetup):
     def __init__(self):
@@ -14,6 +16,7 @@ class DummyArmaThreeSetup(AbstractGameSetup):
 
     def execute(self, *args: Any, **kwargs: Any) -> Any:
         print(f"Printing dummy variable value: {self.dummy_variable}")
+
 
 def test_arma_three_html_parser() -> None:
     mock_mod_list_path = os.path.join("mock_data", "mock-mod-list.html")

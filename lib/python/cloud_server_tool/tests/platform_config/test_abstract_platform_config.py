@@ -2,7 +2,6 @@ from cst_game.platform_config.abstract_platform_config import AbstractPlatformCo
 
 
 class DummyPlatformConfig(AbstractPlatformConfig):
-
     @property
     def binary_32bit(self) -> str:
         return "dummy_binary_32bit"
@@ -18,6 +17,7 @@ class DummyPlatformConfig(AbstractPlatformConfig):
     @property
     def password(self) -> str | None:
         return "dummy_password"
+
 
 def test_abstract_platform_config() -> None:
     dummy_platform_config = DummyPlatformConfig()

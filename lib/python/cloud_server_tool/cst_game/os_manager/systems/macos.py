@@ -3,6 +3,7 @@ from cst_game.os_manager.abstract_os import AbstractOS
 
 class MacOS(AbstractOS):
     operating_system_alias = "macos"
+
     def __init__(self) -> None:
         super().__init__()
 
