@@ -16,6 +16,14 @@ def parse_and_run(
         help="Module-style path to cst_game setup file: 'cst_game.games.arma_three.setup'",
     )
 
+    parser.add_argument(
+        "--operating-system",
+        type=str,
+        default=None,
+        required=True,
+        help="Operating system of system",
+    )
+
     namespace = GameSetupRunnerArgs()
     if strict_mode:
         parsed_args = parser.parse_args(args=supplied_args, namespace=namespace)
