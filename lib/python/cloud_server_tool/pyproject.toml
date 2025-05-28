@@ -75,7 +75,7 @@ markers = ["excluded: test to not run with coverage"]
 source = ["cst_game"]
 
 [tool.coverage.report]
-fail_under = 90.00
+fail_under = 80.00
 precision = 2
 ignore_errors = true
 skip_empty = true

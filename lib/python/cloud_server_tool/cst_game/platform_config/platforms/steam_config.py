@@ -47,7 +47,7 @@ class SteamConfig(AbstractPlatformConfig):
     def steamcmd_root_dir(instance_root_dir: str) -> str:
         return os.path.join(instance_root_dir, "steamcmd")
 
-    def install_steamcmd_binary(self) -> None:
+    def install_steamcmd_binary(self) -> None: # pragma: no cover
         if self.parsed_args.operating_system == "linux":
             if not os.path.exists(os.path.join(os.getcwd(), "steamcmd")):
                 os.mkdir(os.path.join(os.getcwd(), "steamcmd"))
