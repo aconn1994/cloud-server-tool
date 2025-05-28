@@ -19,6 +19,10 @@ class GameConfig(SteamConfig):
         return os_manager.name_to_os_mapper[operating_system]
 
     @property
+    def game_name(self) -> str:
+        return "arma_three"
+
+    @property
     def game_id(self) -> str:
         return "233780"
 

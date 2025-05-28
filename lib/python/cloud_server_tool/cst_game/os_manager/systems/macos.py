@@ -9,4 +9,4 @@ class MacOS(AbstractOS):
 
     @property
     def instance_root_dir(self) -> str:
-        return f"/Users/{self.user}"
+        return f"/Users/{self.default_game_folder}"

@@ -25,10 +25,31 @@ def parse_and_run(
     )
 
     parser.add_argument(
+        "--username",
+        type=str,
+        default=None,
+        help="Username",
+    )
+
+    parser.add_argument(
+        "--password",
+        type=str,
+        default=None,
+        help="Password",
+    )
+
+    parser.add_argument(
         "--debug",
         action="store_true",
         required=False,
         help="Enable debug mode",
+    )
+
+    parser.add_argument(
+        "--local",
+        action="store_true",
+        required=False,
+        help="Run local mode",
     )
 
     namespace = GameSetupRunnerArgs()

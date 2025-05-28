@@ -36,9 +36,11 @@ class SteamConfig(AbstractPlatformConfig):
     def workshop_items_download_path(self) -> str:
         return os.path.join("steamapps", "workshop", "content", self.game_workshop_id)
 
-    def steam_client(self, os_manager: AbstractOS) -> SteamCMDClient:
+    def steam_client(self, game_install_dir: str) -> SteamCMDClient:
         return SteamCMDClient(
-            os_manager.instance_root_dir, self.username, self.password
+            game_install_dir,
+            self.parsed_args.username,
+            self.parsed_args.password,
         )
 
     @staticmethod
@@ -49,18 +51,14 @@ class SteamConfig(AbstractPlatformConfig):
         if self.parsed_args.operating_system == "linux":
             if not os.path.exists(os.path.join(os.getcwd(), "steamcmd")):
                 os.mkdir(os.path.join(os.getcwd(), "steamcmd"))
-            self.logger.warning("Installing SteamCMD prerequisites...")
             subprocess.run(
                 ["apt-get", "install", "-y", "curl", "lib32gcc-s1"], check=True
             )
-            self.logger.warning("SteamCMD prerequisites installed.")
-            self.logger.warning("Installing SteamCMD...")
             subprocess.run(
                 "curl -sqL 'https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz' | tar zxf - -C /home/gameuser/steamcmd",
                 shell=True,
                 check=True,
             )
-            self.logger.warning("SteamCMD installed.")
         elif self.parsed_args.operating_system == "windows":
             pass
         else:

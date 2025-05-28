@@ -9,4 +9,4 @@ class Windows(AbstractOS):
 
     @property
     def instance_root_dir(self) -> str:
-        return f"C:/Users/{self.user}"
+        return f"C:/Users/{self.default_game_folder}"

@@ -27,6 +27,10 @@ class AbstractOS(ABC):
         return getpass.getuser()
 
     @property
+    def default_game_folder(self) -> str:
+        return "gameuser"
+
+    @property
     @abstractmethod
     def instance_root_dir(self) -> str:
         pass

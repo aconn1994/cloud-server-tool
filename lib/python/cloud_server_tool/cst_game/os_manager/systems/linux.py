@@ -9,4 +9,4 @@ class Linux(AbstractOS):
 
     @property
     def instance_root_dir(self) -> str:
-        return f"/home/{self.user}"
+        return f"/home/{self.default_game_folder}"
