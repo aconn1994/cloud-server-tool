@@ -5,8 +5,8 @@ from cst_game.platform_config.platforms.steam_config import SteamConfig
 
 class GameConfig(SteamConfig):
     def __init__(self, operating_system: str) -> None:
-        super().__init__()
         self.os_manager = self.get_os_manager(operating_system)
+        super().__init__(self.os_manager)
 
     @staticmethod
     def get_os_manager(operating_system: str) -> AbstractOS:

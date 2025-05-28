@@ -2,13 +2,11 @@ import getpass
 import os
 import platform
 
-from cst_game.os_manager.systems.linux import Linux
-from cst_game.os_manager.systems.macos import MacOS
-from cst_game.os_manager.systems.windows import Windows
+from cst_game.os_manager.operating_system_manager import OperatingSystemManager
 
 
 def test_linux_os() -> None:
-    linux_os = Linux()
+    linux_os = OperatingSystemManager().name_to_os_mapper["linux"]
 
     assert linux_os.operating_system_alias == "linux"
     assert linux_os.instance_root_dir == f"/home/{linux_os.user}"
@@ -19,7 +17,7 @@ def test_linux_os() -> None:
 
 
 def test_macos_os() -> None:
-    mac_os = MacOS()
+    mac_os = OperatingSystemManager().name_to_os_mapper["macos"]
 
     assert mac_os.operating_system_alias == "macos"
     assert mac_os.instance_root_dir == f"/Users/{mac_os.user}"
@@ -30,7 +28,7 @@ def test_macos_os() -> None:
 
 
 def test_windows_os() -> None:
-    windows_os = Windows()
+    windows_os = OperatingSystemManager().name_to_os_mapper["windows"]
 
     assert windows_os.operating_system_alias == "windows"
     assert windows_os.instance_root_dir == f"C:/Users/{windows_os.user}"

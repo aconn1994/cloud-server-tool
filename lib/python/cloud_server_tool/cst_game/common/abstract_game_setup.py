@@ -1,6 +1,8 @@
+import logging
 import os
 import re
 from abc import ABC, abstractmethod
+from logging import Logger
 from typing import Literal
 
 from cst_game.common.game_setup_runner_args import GameSetupRunnerArgs
@@ -14,6 +16,14 @@ class AbstractGameSetup(ABC):
     @abstractmethod
     def name(self) -> str:
         pass
+
+    def init_logger(self) -> Logger:
+        logger = logging.getLogger(__name__)
+        if self.parsed_args.debug:
+            logger.setLevel(logging.DEBUG)
+        else:
+            logger.setLevel(logging.INFO)
+        return logger
 
     @staticmethod
     def reformat_string(

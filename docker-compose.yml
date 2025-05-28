@@ -3,6 +3,7 @@ services:
     container_name: cst-base-container
     image: cst-base:latest
     platform: linux/amd64
+    # image: ghcr.io/aconn1994/cst_base:main
     build:
       dockerfile: local_env/images/base_image/Dockerfile
       context: .

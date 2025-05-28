@@ -1,4 +1,15 @@
+import os
+
+from cst_game.os_manager.abstract_os import AbstractOS
 from cst_game.platform_config.abstract_platform_config import AbstractPlatformConfig
+
+
+class DummyOS(AbstractOS):
+    def operating_system_alias(self) -> str:
+        return "dummy_os"
+
+    def instance_root_dir(self) -> str:
+        return os.getcwd()
 
 
 class DummyPlatformConfig(AbstractPlatformConfig):
@@ -20,7 +31,8 @@ class DummyPlatformConfig(AbstractPlatformConfig):
 
 
 def test_abstract_platform_config() -> None:
-    dummy_platform_config = DummyPlatformConfig()
+    os_manager = DummyOS()
+    dummy_platform_config = DummyPlatformConfig(os_manager)
 
     assert dummy_platform_config.binary_32bit == "dummy_binary_32bit"
     assert dummy_platform_config.binary_64bit == "dummy_binary_64bit"

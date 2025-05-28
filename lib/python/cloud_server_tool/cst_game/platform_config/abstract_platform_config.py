@@ -1,9 +1,11 @@
 from abc import ABC, abstractmethod
 
+from cst_game.os_manager.abstract_os import AbstractOS
+
 
 class AbstractPlatformConfig(ABC):
-    def __init__(self) -> None:
-        super().__init__()
+    def __init__(self, os_manager: AbstractOS) -> None:
+        self.os_manager = os_manager
 
     @property
     @abstractmethod
