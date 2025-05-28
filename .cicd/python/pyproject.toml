@@ -2,37 +2,26 @@
 name = "cicd"
 version = "0.1.0"
 description = ""
-authors = [
-    {name = "Adam Connolly",email = "45522351+aconn1994@users.noreply.github.com"}
-]
+authors = [{ name = "Adam Connolly", email = "45522351+aconn1994@users.noreply.github.com" }]
 requires-python = ">=3.13"
 
-
 [build-system]
-requires = ["poetry-core>=2.0.0,<3.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
-[tool.poetry]
-name = "cicd"
-version = "0.0.0"
-description = ""
-authors = ["Adam Connolly aconn1994@gmail.com"]
-packages = [{include = "cst_cicd"}]
+[dependency-groups]
+dev = [
+    "ruff>=0.9.4,<0.10.0",
+    "pytest>=8.3.4,<9.0.0",
+    "coverage>=7.8.0",
+    "mypy==1.15.0",
+]
 
-[tool.poetry.requires-plugins]
-poetry-plugin-export = ">=1.8"
+[tool.hatch.build.targets.sdist]
+include = ["cst_cicd"]
 
-[tool.poetry.dependencies]
-python = ">=3.13"
-
-[tool.poetry.group.dev]
-optional = true
-
-[tool.poetry.group.dev.dependencies]
-ruff = ">=0.9.4,<0.10.0"
-pytest = ">=8.3.4,<9.0.0"
-coverage = ">=7.8.0"
-mypy = "1.15.0"
+[tool.hatch.build.targets.wheel]
+include = ["cst_cicd"]
 
 [tool.ruff.lint]
 select = [
