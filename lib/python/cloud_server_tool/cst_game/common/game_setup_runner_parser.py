@@ -24,6 +24,13 @@ def parse_and_run(
         help="Operating system of system",
     )
 
+    parser.add_argument(
+        "--debug",
+        action="store_true",
+        required=False,
+        help="Enable debug mode",
+    )
+
     namespace = GameSetupRunnerArgs()
     if strict_mode:
         parsed_args = parser.parse_args(args=supplied_args, namespace=namespace)

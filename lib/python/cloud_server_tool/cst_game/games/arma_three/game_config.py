@@ -1,12 +1,17 @@
+from logging import Logger
+
+from cst_game.common.game_setup_runner_args import GameSetupRunnerArgs
 from cst_game.os_manager.abstract_os import AbstractOS
 from cst_game.os_manager.operating_system_manager import OperatingSystemManager
 from cst_game.platform_config.platforms.steam_config import SteamConfig
 
 
 class GameConfig(SteamConfig):
-    def __init__(self, operating_system: str) -> None:
-        self.os_manager = self.get_os_manager(operating_system)
-        super().__init__(self.os_manager)
+    def __init__(self, parsed_args: GameSetupRunnerArgs, logger: Logger) -> None:
+        self.parsed_args = parsed_args
+        self.logger = logger
+        self.os_manager = self.get_os_manager(self.parsed_args.operating_system)
+        super().__init__(self.parsed_args, self.os_manager, self.logger)
 
     @staticmethod
     def get_os_manager(operating_system: str) -> AbstractOS:

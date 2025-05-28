@@ -30,3 +30,16 @@ services:
       - "2223:22"
     depends_on:
       - cst-base
+
+  game-test-linux:
+    container_name: game-test-linux-container
+    platform: linux/amd64
+    build:
+      dockerfile: .cicd/game-images/linux/Dockerfile
+      context: .
+    privileged: true
+    user: root
+    working_dir: /root/gameuser
+    volumes:
+      - .:/root/gameuser:rw,z
+    entrypoint: /bin/bash

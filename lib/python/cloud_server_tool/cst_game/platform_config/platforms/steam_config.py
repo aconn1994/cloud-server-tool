@@ -1,14 +1,21 @@
 import os
+import subprocess
 from abc import abstractmethod
+from logging import Logger
 
 from cst_game.common.clients.steam_cmd_client import SteamCMDClient
+from cst_game.common.game_setup_runner_args import GameSetupRunnerArgs
 from cst_game.os_manager.abstract_os import AbstractOS
 from cst_game.platform_config.abstract_platform_config import AbstractPlatformConfig
 
 
 class SteamConfig(AbstractPlatformConfig):
-    def __init__(self, os_manager: AbstractOS) -> None:
+    def __init__(
+        self, parsed_args: GameSetupRunnerArgs, os_manager: AbstractOS, logger: Logger
+    ) -> None:
+        self.parsed_args = parsed_args
         self.os_manager = os_manager
+        self.logger = logger
         super().__init__(self.os_manager)
 
     @property
@@ -38,5 +45,23 @@ class SteamConfig(AbstractPlatformConfig):
     def steamcmd_root_dir(instance_root_dir: str) -> str:
         return os.path.join(instance_root_dir, "steamcmd")
 
-    def install_steamcmd_binary(self, instance_root_dir: str) -> None:
-        pass  # todo, get and unpack steamcmd based on operating system
+    def install_steamcmd_binary(self) -> None:
+        if self.parsed_args.operating_system == "linux":
+            if not os.path.exists(os.path.join(os.getcwd(), "steamcmd")):
+                os.mkdir(os.path.join(os.getcwd(), "steamcmd"))
+            self.logger.warning("Installing SteamCMD prerequisites...")
+            subprocess.run(
+                ["apt-get", "install", "-y", "curl", "lib32gcc-s1"], check=True
+            )
+            self.logger.warning("SteamCMD prerequisites installed.")
+            self.logger.warning("Installing SteamCMD...")
+            subprocess.run(
+                "curl -sqL 'https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz' | tar zxf - -C /home/gameuser/steamcmd",
+                shell=True,
+                check=True,
+            )
+            self.logger.warning("SteamCMD installed.")
+        elif self.parsed_args.operating_system == "windows":
+            pass
+        else:
+            self.logger.warning("Operating System not supported.")
