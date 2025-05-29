@@ -83,7 +83,8 @@ omit = [
     "*/tests/*",
     "*/common/clients/*", # covered in cicd testing
     "*/**/setup.py", # covered in cicd testing
-    "*/**/arma_three_html_parser.py"
+    "*/**/arma_three_html_parser.py",
+    "*/**/game_config.py" # covered in cicd testing
 ]
 exclude_lines = [
     "pragma: no cover"

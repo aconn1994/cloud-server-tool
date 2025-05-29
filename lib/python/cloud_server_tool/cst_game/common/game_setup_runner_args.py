@@ -8,3 +8,4 @@ class GameSetupRunnerArgs(Namespace):
     password: str | None
     debug: bool
     local: bool
+    arch: str

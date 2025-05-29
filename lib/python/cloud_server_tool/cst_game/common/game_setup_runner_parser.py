@@ -52,6 +52,13 @@ def parse_and_run(
         help="Run local mode",
     )
 
+    parser.add_argument(
+        "--arch",
+        type=str,
+        default="64",
+        help="Preferred architecture executable",
+    )
+
     namespace = GameSetupRunnerArgs()
     if strict_mode:
         parsed_args = parser.parse_args(args=supplied_args, namespace=namespace)

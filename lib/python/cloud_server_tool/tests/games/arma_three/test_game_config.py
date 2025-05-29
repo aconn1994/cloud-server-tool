@@ -9,8 +9,11 @@ base_args = ["--module-name", MODULE_NAME, "--operating-system", OPERATING_SYSTE
 
 logger = logging.getLogger(__name__)
 
+
 def test_game_config() -> None:
-    game_config = GameConfig(parsed_args=parse_and_run(supplied_args=base_args),logger=logger)
+    game_config = GameConfig(
+        parsed_args=parse_and_run(supplied_args=base_args), logger=logger
+    )
     os_manager = game_config.os_manager
 
     assert game_config.game_id == "233780"
@@ -20,4 +23,7 @@ def test_game_config() -> None:
     assert game_config.username is None
     assert game_config.password is None
     assert os_manager.operating_system_alias == "linux"
-    assert os_manager.instance_root_dir == f"/home/{game_config.os_manager.default_game_folder}"
+    assert (
+        os_manager.instance_root_dir
+        == f"/home/{game_config.os_manager.default_game_folder}"
+    )
