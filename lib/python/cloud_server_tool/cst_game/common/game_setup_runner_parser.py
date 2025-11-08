@@ -73,6 +73,6 @@ def parse_and_run(
 
     print(f"Parsed args: {parsed_args}")
 
-    module = importlib.import_module(parsed_args.module_name)
+    module = importlib.import_module(f"cst_game.games.{parsed_args.module_name}.setup")
     _ = module.main(parsed_args=parsed_args)
     return parsed_args

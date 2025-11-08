@@ -4,14 +4,14 @@ import subprocess
 class SteamCMDClient:
     def __init__(self, local_game_dir: str, username: str, password: str):
         self.local_game_dir: str = local_game_dir
-        self._username: str = username
-        self._password: str = password
+        self._username: str | None = username
+        self._password: str | None = password
 
     def install_game(self, game_id: str) -> None:
         steamcmd = ["./steamcmd/steamcmd.sh"]
         steamcmd.extend(["+force_install_dir", self.local_game_dir])
 
-        if self._username != "NULL" and self._password != "NULL":
+        if self._username is not None and self._password is not None:
             steamcmd.extend(["+login", self._username, self._password])
         else:
             print(
@@ -30,7 +30,7 @@ class SteamCMDClient:
         steamcmd = ["./steamcmd/steamcmd.sh"]
         steamcmd.extend(["+force_install_dir", self.local_game_dir])
 
-        if self._username != "NULL" and self._password != "NULL":
+        if self._username is not None and self._password is not None:
             steamcmd.extend(["+login", self._username, self._password])
         else:
             print(
