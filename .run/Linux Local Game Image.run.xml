@@ -1,0 +1,49 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Linux Local Game Image" type="docker-deploy" factoryName="dockerfile" server-name="Docker">
+    <deployment type="dockerfile">
+      <settings>
+        <option name="buildArgs">
+          <list>
+            <DockerEnvVarImpl>
+              <option name="name" value="PORTS" />
+              <option name="value" value="2302/udp 2303/udp 2304/udp 2305/udp 2306/udp" />
+            </DockerEnvVarImpl>
+          </list>
+        </option>
+        <option name="containerName" value="local-game-image-linux" />
+        <option name="contextFolderPath" value="." />
+        <option name="portBindings">
+          <list>
+            <DockerPortBindingImpl>
+              <option name="containerPort" value="2302" />
+              <option name="hostPort" value="2302" />
+              <option name="protocol" value="udp" />
+            </DockerPortBindingImpl>
+            <DockerPortBindingImpl>
+              <option name="containerPort" value="2303" />
+              <option name="hostPort" value="2303" />
+              <option name="protocol" value="udp" />
+            </DockerPortBindingImpl>
+            <DockerPortBindingImpl>
+              <option name="containerPort" value="2304" />
+              <option name="hostPort" value="2304" />
+              <option name="protocol" value="udp" />
+            </DockerPortBindingImpl>
+            <DockerPortBindingImpl>
+              <option name="containerPort" value="2305" />
+              <option name="hostPort" value="2305" />
+              <option name="protocol" value="udp" />
+            </DockerPortBindingImpl>
+            <DockerPortBindingImpl>
+              <option name="containerPort" value="2306" />
+              <option name="hostPort" value="2306" />
+              <option name="protocol" value="udp" />
+            </DockerPortBindingImpl>
+          </list>
+        </option>
+        <option name="sourceFilePath" value=".cicd/game-images/linux/Dockerfile" />
+      </settings>
+    </deployment>
+    <method v="2" />
+  </configuration>
+</component>

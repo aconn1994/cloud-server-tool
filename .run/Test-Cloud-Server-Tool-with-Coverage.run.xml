@@ -1,0 +1,22 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Test-Cloud-Server-Tool-with-Coverage" type="docker-deploy" factoryName="docker-image" server-name="Docker">
+    <deployment type="docker-image">
+      <settings>
+        <option name="imageTag" value="cst-base:latest" />
+        <option name="command" value=".cicd/local/test_python_lib_w_coverage.sh" />
+        <option name="containerName" value="cst-base-container" />
+        <option name="entrypoint" value="/bin/bash" />
+        <option name="commandLineOptions" value="-t -u root -w /root/cloud-server-tool" />
+        <option name="volumeBindings">
+          <list>
+            <DockerVolumeBindingImpl>
+              <option name="containerPath" value="/root/cloud-server-tool" />
+              <option name="hostPath" value="$PROJECT_DIR$" />
+            </DockerVolumeBindingImpl>
+          </list>
+        </option>
+      </settings>
+    </deployment>
+    <method v="2" />
+  </configuration>
+</component>
