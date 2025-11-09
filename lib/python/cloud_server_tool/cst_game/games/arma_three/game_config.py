@@ -56,9 +56,7 @@ class GameConfig(SteamConfig):
     # Directory/Pathing
     @property
     def game_install_path(self) -> str:
-        return os.path.join(
-            self.os_manager.instance_root_dir, "steamcmd", self.game_name
-        )
+        return os.path.join(self.os_manager.instance_root_dir, "steamcmd", self.game_name)
 
     @property
     def game_assets_path(self) -> str:

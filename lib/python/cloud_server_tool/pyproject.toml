@@ -23,6 +23,9 @@ include = ["cst_game"]
 [tool.hatch.build.targets.wheel]
 include = ["cst_game"]
 
+[tool.ruff]
+line-length = 100
+
 [tool.ruff.lint]
 select = [
     "F401", # unused imports

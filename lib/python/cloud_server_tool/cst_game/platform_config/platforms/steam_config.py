@@ -51,9 +51,7 @@ class SteamConfig(AbstractPlatformConfig):
         if self.parsed_args.operating_system == "linux":
             if not os.path.exists(os.path.join(os.getcwd(), "steamcmd")):
                 os.mkdir(os.path.join(os.getcwd(), "steamcmd"))
-            subprocess.run(
-                ["apt-get", "install", "-y", "curl", "lib32gcc-s1"], check=True
-            )
+            subprocess.run(["apt-get", "install", "-y", "curl", "lib32gcc-s1"], check=True)
             subprocess.run(
                 "curl -sqL 'https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz' | tar zxf - -C /home/gameuser/steamcmd",
                 shell=True,

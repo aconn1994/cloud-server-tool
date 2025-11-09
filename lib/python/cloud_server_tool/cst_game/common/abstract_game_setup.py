@@ -18,6 +18,7 @@ class AbstractGameSetup(ABC):
         pass
 
     def init_logger(self) -> Logger:
+        logging.basicConfig(format="%(asctime)s - %(levelname)s - %(message)s")
         logger = logging.getLogger(__name__)
         if self.parsed_args.debug:
             logger.setLevel(logging.DEBUG)
@@ -26,16 +27,12 @@ class AbstractGameSetup(ABC):
         return logger
 
     @staticmethod
-    def reformat_string(
-        val: str, repl_char: str, pattern: str = "[^A-Za-z0-9]+"
-    ) -> str:
+    def reformat_string(val: str, repl_char: str, pattern: str = "[^A-Za-z0-9]+") -> str:
         return re.sub(pattern, repl_char, val)
 
     @staticmethod
     def rename(item_path: str, item_name: str, new_item_name: str) -> None:
-        os.rename(
-            os.path.join(item_path, item_name), os.path.join(item_path, new_item_name)
-        )
+        os.rename(os.path.join(item_path, item_name), os.path.join(item_path, new_item_name))
 
     @staticmethod
     def symlink(src: str, dst: str, descriptor: str) -> None:
@@ -44,9 +41,7 @@ class AbstractGameSetup(ABC):
         except FileExistsError:
             print(f"{descriptor} already linked to {dst}.")
 
-    def recursive_rename_directory(
-        self, directory: str, case: Literal["lower", "upper"]
-    ) -> None:
+    def recursive_rename_directory(self, directory: str, case: Literal["lower", "upper"]) -> None:
         for item in os.listdir(directory):
             if os.path.isdir(os.path.join(directory, item)):
                 self.recursive_rename_directory(os.path.join(directory, item), case)

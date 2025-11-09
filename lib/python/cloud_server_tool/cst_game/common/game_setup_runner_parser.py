@@ -63,13 +63,9 @@ def parse_and_run(
     if strict_mode:
         parsed_args = parser.parse_args(args=supplied_args, namespace=namespace)
     else:
-        parsed_args, unknown_args = parser.parse_known_args(
-            args=supplied_args, namespace=namespace
-        )
+        parsed_args, unknown_args = parser.parse_known_args(args=supplied_args, namespace=namespace)
         if unknown_args:
-            print(
-                f"Strict Mode is False, ignoring extra supplied arguments: {unknown_args}"
-            )
+            print(f"Strict Mode is False, ignoring extra supplied arguments: {unknown_args}")
 
     print(f"Parsed args: {parsed_args}")
 

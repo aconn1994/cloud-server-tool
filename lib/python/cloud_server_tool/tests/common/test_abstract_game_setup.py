@@ -47,9 +47,7 @@ def test_rename_file() -> None:
     dummy_file_2_name = "dummy_file_2.txt"
 
     open(dummy_file_1_name, "w")
-    dummy_setup.rename(
-        item_path="", item_name=dummy_file_1_name, new_item_name=dummy_file_2_name
-    )
+    dummy_setup.rename(item_path="", item_name=dummy_file_1_name, new_item_name=dummy_file_2_name)
     assert os.path.exists(dummy_file_2_name)
     os.remove(dummy_file_2_name)
 
@@ -82,9 +80,7 @@ def test_recursive_rename_directory_lower() -> None:
 
     assert os.path.exists(os.path.join(dummy_dir_name.lower()))
     assert os.path.exists(os.path.join(dummy_dir_name.lower(), dummy_file_name.lower()))
-    assert os.path.exists(
-        os.path.join(dummy_dir_name.lower(), dummy_sub_dir_name.lower())
-    )
+    assert os.path.exists(os.path.join(dummy_dir_name.lower(), dummy_sub_dir_name.lower()))
     assert os.path.exists(
         os.path.join(
             dummy_dir_name.lower(),
@@ -108,9 +104,7 @@ def test_recursive_rename_directory_upper() -> None:
 
     assert os.path.exists(os.path.join(dummy_dir_name.upper()))
     assert os.path.exists(os.path.join(dummy_dir_name.upper(), dummy_file_name.upper()))
-    assert os.path.exists(
-        os.path.join(dummy_dir_name.upper(), dummy_sub_dir_name.upper())
-    )
+    assert os.path.exists(os.path.join(dummy_dir_name.upper(), dummy_sub_dir_name.upper()))
     assert os.path.exists(
         os.path.join(
             dummy_dir_name.upper(),
