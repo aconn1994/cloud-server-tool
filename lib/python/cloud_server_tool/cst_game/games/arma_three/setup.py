@@ -128,9 +128,17 @@ class Setup(AbstractGameSetup, ABC):
                 self._link_key_item(workshop_item_download_path)
 
         # Launch Game
-        self._launch_game()
-
-        self.logger.info(f"{self.name()} has been Executed.")
+        if os.path.exists(
+            os.path.join(self.game_config.game_install_path, self.game_config.binary_32bit)
+        ) or os.path.exists(
+            os.path.join(self.game_config.game_install_path, self.game_config.binary_32bit)
+        ):
+            self._launch_game()
+            self.logger.info(f"{self.name()} has been Executed.")
+        else:
+            self.logger.info(
+                f"Game binaries for {self.name()} not found. Check Steam Authentication."
+            )
 
 
 def main(parsed_args: GameSetupRunnerArgs) -> None:

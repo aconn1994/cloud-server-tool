@@ -2,7 +2,7 @@ import subprocess
 
 
 class SteamCMDClient:
-    def __init__(self, local_game_dir: str, username: str, password: str):
+    def __init__(self, local_game_dir: str, username: str | None, password: str | None):
         self.local_game_dir: str = local_game_dir
         self._username: str | None = username
         self._password: str | None = password
@@ -15,7 +15,9 @@ class SteamCMDClient:
             steamcmd.extend(["+login", self._username, self._password])
         else:
             print("Steam Username and/or Password not provided. Logging in anonymously...")
-            steamcmd.extend(["+login", "anonymous"])
+            steamcmd.extend(
+                ["+login", "anonymous"]
+            )  # todo, certain games cannot be downlaoded anonymously
 
         steamcmd.extend(["+app_update", game_id, "validate"])
         steamcmd.extend(["+quit"])
