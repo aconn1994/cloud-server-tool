@@ -19,6 +19,6 @@ jobs:
         working-directory: .
         run: /bin/bash .cicd/bash/linters/python-format.sh .cicd/python .cicd/python cicd "check_arg" .cicd/python/pyproject.toml python3
         continue-on-error: true
-      - name: Python Linting/Formatting Check cloud_server_tool package
+      - name: Python Linting/Formatting Check cloud-server-tool package
         working-directory: .
-        run: /bin/bash .cicd/bash/linters/python-format.sh lib/python/cloud_server_tool lib/python/cloud_server_tool cloud_server_tool "check_arg" lib/python/cloud_server_tool/pyproject.toml /root/venvs/cloud_server_tool/bin/python3
+        run: /bin/bash .cicd/bash/linters/python-format.sh lib/python/cloud-server-tool lib/python/cloud-server-tool cloud-server-tool "check_arg" lib/python/cloud-server-tool/pyproject.toml /root/venvs/cloud-server-tool/bin/python3

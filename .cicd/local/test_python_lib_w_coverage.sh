@@ -5,6 +5,6 @@ set -euo pipefail
 # CICD
 #/bin/bash .cicd/bash/testers/coverage-pytest.sh .cicd/python .cicd/python cst_cicd pyproject.toml python3 # todo, need to fix
 
-# cloud_server_tool
-/bin/bash .cicd/bash/testers/coverage-pytest.sh lib/python/cloud_server_tool lib/python/cloud_server_tool cloud_server_tool pyproject.toml /root/venvs/cloud_server_tool/bin/python3
+# cloud-server-tool
+/bin/bash .cicd/bash/testers/coverage-pytest.sh lib/python/cloud-server-tool lib/python/cloud-server-tool cloud-server-tool pyproject.toml /root/venvs/cloud-server-tool/bin/python3
 

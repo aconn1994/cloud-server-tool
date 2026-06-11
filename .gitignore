@@ -5,9 +5,9 @@
 *.pyc
 /.idea
 /archive
-/lib/python/cst/game_assets/arma_three/assets/missions
+/archived/cst/game_assets/arma_three/assets/missions
 .DS_Store
 .coverage
 *.log
 /tmp
-/lib/python/cloud_server_tool/.venv
+/lib/python/cloud-server-tool/.venv

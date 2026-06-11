@@ -33,9 +33,9 @@ RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - && \
 WORKDIR /tmp
 
 ARG CICD_PATH=.cicd/python
-ARG CST_PATH=lib/python/cloud_server_tool
+ARG CST_PATH=lib/python/cloud-server-tool
 ARG CICD_NAME=cicd
-ARG CST_NAME=cloud_server_tool
+ARG CST_NAME=cloud-server-tool
 
 # Setup UV
 ENV UV_TOOL_BIN_DIR=/bin
