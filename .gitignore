@@ -10,4 +10,4 @@
 .coverage
 *.log
 /tmp
-/lib/python/cloud-server-tool/.venv
+/lib/python/cst/.venv

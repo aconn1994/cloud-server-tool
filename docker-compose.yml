@@ -9,9 +9,9 @@ services:
       context: .
     privileged: true
     user: root
-    working_dir: /root/cloud-server-tool
+    working_dir: /root/cst
     volumes:
-      - .:/root/cloud-server-tool:rw,z
+      - .:/root/cst:rw,z
     entrypoint: /bin/bash
 
   cst-debug:
@@ -23,9 +23,9 @@ services:
       context: .
     privileged: true
     user: root
-    working_dir: /root/cloud-server-tool
+    working_dir: /root/cst
     volumes:
-      - .:/root/cloud-server-tool:rw,z
+      - .:/root/cst:rw,z
     ports:
       - "2223:22"
     depends_on:

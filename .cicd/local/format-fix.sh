@@ -8,5 +8,5 @@ set -euo pipefail
 # CST
 #/bin/bash .cicd/bash/linters/python-format.sh .cicd/python lib/python/cst cst "" lib/python/cst/pyproject.toml /root/venvs/cst/bin/python3
 
-# cloud-server-tool
-/bin/bash .cicd/bash/linters/python-format.sh lib/python/cloud-server-tool lib/python/cloud-server-tool cloud-server-tool "" lib/python/cloud-server-tool/pyproject.toml /root/venvs/cloud-server-tool/bin/python3
+# cst
+/bin/bash .cicd/bash/linters/python-format.sh lib/python/cst lib/python/cst cst "" lib/python/cst/pyproject.toml /root/venvs/cst/bin/python3
