@@ -18,7 +18,7 @@ jobs:
         continue-on-error: true
       - name: Python Linting/Formatting Check CICD package
         working-directory: .
-        run: /bin/bash .cicd/bash/linters/python-format.sh .cicd/python .cicd/python cicd "check_arg" .cicd/python/pyproject.toml python3
+        run: /bin/bash .cicd/bash/linters/python-format.sh .cicd/python .cicd/python cicd "check_arg" .cicd/python/pyproject.toml /usr/local/bin/python3
         continue-on-error: true
       - name: Python Linting/Formatting Check cst package
         working-directory: .

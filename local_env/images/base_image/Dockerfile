@@ -33,25 +33,19 @@ RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - && \
 WORKDIR /tmp
 
 ARG CICD_PATH=.cicd/python
-ARG CST_PATH=lib/python/cst
 ARG CICD_NAME=cicd
+ARG CST_PATH=lib/python/cst
 ARG CST_NAME=cst
 
 # Setup UV
 ENV UV_TOOL_BIN_DIR=/bin
-COPY --from=ghcr.io/astral-sh/uv:0.6.12 /uv /uvx /bin/
+COPY --from=ghcr.io/astral-sh/uv:0.8.17 /uv /uvx /bin/
 
 WORKDIR /tmp
 COPY ${CICD_PATH}/pyproject.toml ${CICD_PATH}/uv.lock /tmp/${CICD_NAME}/
 COPY ${CST_PATH}/pyproject.toml ${CST_PATH}/uv.lock /tmp/${CST_NAME}/
 
-RUN uv venv /root/venvs/${CICD_NAME} && \
-    . /root/venvs/${CICD_NAME}/bin/activate && \
-    cd /tmp/${CICD_NAME} && uv pip install -r pyproject.toml && \
-    uv pip install -r pyproject.toml --group dev && \
-    uv venv /root/venvs/${CST_NAME} && \
-    . /root/venvs/${CST_NAME}/bin/activate && \
-    cd /tmp/${CST_NAME} && uv pip install -r pyproject.toml && \
-    uv pip install -r pyproject.toml --group dev && \
-    rm -rf /tmp/* /root/.cache/*
-
+RUN cd /tmp/${CICD_NAME} && UV_PROJECT_ENVIRONMENT=/usr/local uv pip install -r pyproject.toml --system --group dev && \
+    python -m venv /root/venvs/${CST_NAME} && UV_PROJECT_ENVIRONMENT=/root/venvs/${CST_NAME} uv sync && \
+    rm -rf /tmp/* /root/.cache/* && \
+    cd /tmp && uv cache clean

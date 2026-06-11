@@ -16,7 +16,7 @@ services:
 
   cst-debug:
     container_name: cst-debug-container
-    image: cst_debug:latest
+#    image: cst-debug:latest
     platform: linux/amd64
     build:
       dockerfile: local_env/images/debug_image/Dockerfile
