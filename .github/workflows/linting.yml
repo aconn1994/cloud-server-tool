@@ -3,6 +3,7 @@ name: Linting (Python, Terraform)
 on:
   workflow_call:
   workflow_dispatch:
+  push:
 
 jobs:
   linter:

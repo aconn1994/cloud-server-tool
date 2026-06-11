@@ -3,6 +3,7 @@ name: Testing (Python, Terraform)
 on:
   workflow_call:
   workflow_dispatch:
+  push:
 
 env:
  # verbosity setting for Terraform logs
