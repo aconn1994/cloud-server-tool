@@ -8,7 +8,6 @@ LOG_ALIAS=$3
 PYPROJECT_TOML_PATH=$4
 PYTHON_INTERPRETER=$5
 
-PYTHONPATH="$(realpath "$PYTHONPATH")"
 export PYTHONPATH
 echo "PYTHONPATH is set to ${PYTHONPATH}"
 echo "Running python tests with coverage in ${MODULE}"
