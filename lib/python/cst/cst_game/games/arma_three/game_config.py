@@ -34,7 +34,19 @@ class GameConfig(SteamConfig):
         return "233780"
 
     @property
+    def game_port(self) -> str:
+        return "2302"
+
+    @property
+    def profile_name(self) -> str:
+        return "server"
+
+    @property
     def game_workshop_id(self) -> str:
+        return "107410"
+
+    @property
+    def steam_appid(self) -> str:
         return "107410"
 
     @property
@@ -59,6 +71,10 @@ class GameConfig(SteamConfig):
         return os.path.join(self.os_manager.instance_root_dir, "steamcmd", self.game_name)
 
     @property
+    def steam_appid_file_path(self) -> str:
+        return os.path.join(self.game_install_path, "steam_appid.txt")
+
+    @property
     def game_assets_path(self) -> str:
         return os.path.join(self.os_manager.instance_root_dir, "assets")
 
@@ -81,12 +97,28 @@ class GameConfig(SteamConfig):
 
     # Profile Paths
     @property
+    def profiles_root_path(self) -> str:
+        return os.path.join(self.game_install_path, "profiles")
+
+    @property
+    def profiles_dst_path(self) -> str:
+        return os.path.join(self.profiles_root_path, "home", self.profile_name)
+
+    @property
     def profile_src_path(self) -> str:
         return os.path.join(self.game_assets_path, "server.Arma3Profile")
 
     @property
     def profile_dst_path(self) -> str:
-        return os.path.join(self.game_install_path, "server", "server.Arma3Profile")
+        return os.path.join(self.profiles_dst_path, f"{self.profile_name}.Arma3Profile")
+
+    @property
+    def profile_vars_src_path(self) -> str:
+        return os.path.join(self.game_assets_path, "server.vars.Arma3Profile")
+
+    @property
+    def profile_vars_dst_path(self) -> str:
+        return os.path.join(self.profiles_dst_path, f"{self.profile_name}.vars.Arma3Profile")
 
     # Mission Paths
     @property
@@ -98,6 +130,10 @@ class GameConfig(SteamConfig):
         return os.path.join(self.game_install_path, "mpmissions")
 
     # Mod Paths
+    @property
+    def dlcs(self) -> Any:
+        return self.parsed_args.kwargs.get("dlcs")
+
     @property
     def mod_file_src_path(self) -> str:
         return os.path.join(self.game_assets_path, "mod-list.html")

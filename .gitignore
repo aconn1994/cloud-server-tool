@@ -11,3 +11,7 @@
 *.log
 /tmp
 /lib/python/cst/.venv
+*.pem
+/assets
+/logs
+*.rpt

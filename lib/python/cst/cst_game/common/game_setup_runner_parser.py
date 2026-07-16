@@ -4,6 +4,16 @@ import importlib
 from cst_game.common.game_setup_runner_args import GameSetupRunnerArgs
 
 
+class ParseKwargs(argparse.Action):
+    def __call__(self, parser, namespace, values, option_string=None) -> None:  # type: ignore
+        setattr(namespace, self.dest, dict())
+        for value in values:
+            if "=" not in value:
+                raise argparse.ArgumentError(self, f"Invalid format: '{value}'. Must be key=value.")
+            key, val = value.split("=", 1)
+            getattr(namespace, self.dest)[key] = val
+
+
 def parse_and_run(
     supplied_args: list[str] = None, strict_mode: bool = False
 ) -> GameSetupRunnerArgs:
@@ -58,6 +68,15 @@ def parse_and_run(
         default="64",
         help="Preferred architecture executable",
     )
+
+    parser.add_argument(
+        "--expedite-launch",
+        action="store_true",
+        required=False,
+        help="Skip installs and updates. Used for skipping SteamCMD limits.",
+    )
+
+    parser.add_argument("--kwargs", nargs="*", action=ParseKwargs, help="Pass pairs like key=value")
 
     namespace = GameSetupRunnerArgs()
     if strict_mode:

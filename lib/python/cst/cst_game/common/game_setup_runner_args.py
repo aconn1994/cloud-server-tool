@@ -9,3 +9,4 @@ class GameSetupRunnerArgs(Namespace):
     debug: bool
     local: bool
     arch: str
+    expedite_launch: bool

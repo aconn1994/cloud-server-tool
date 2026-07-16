@@ -1,4 +1,5 @@
 import os
+import shutil
 import subprocess
 from abc import ABC
 from typing import Any
@@ -23,31 +24,52 @@ class Setup(AbstractGameSetup, ABC):
         return "Arma 3 Game Server Setup"
 
     def _link_game_config_files(self) -> None:
-        # Symlink Server Config File
         if os.path.exists(self.game_config.configuration_file_src_path):
-            self.symlink(
+            shutil.copyfile(
                 self.game_config.configuration_file_src_path,
                 self.game_config.configuration_file_dst_path,
-                descriptor="Server Config",
+            )
+            self.logger.info(
+                f"Server config placed at {self.game_config.configuration_file_dst_path}"
             )
 
-        # Symlink Server Profile
         if os.path.exists(self.game_config.profile_src_path):
-            if not os.path.exists(os.path.join(self.game_config.game_install_path, "server")):
-                os.mkdir(os.path.join(self.game_config.game_install_path, "server"))
-            self.symlink(
+            os.makedirs(self.game_config.profiles_dst_path, exist_ok=True)
+            shutil.copyfile(
                 self.game_config.profile_src_path,
                 self.game_config.profile_dst_path,
-                descriptor="Server Profile",
             )
+            self.logger.info(f"Server profile placed at {self.game_config.profile_dst_path}")
+            if os.path.exists(self.game_config.profile_vars_src_path):
+                shutil.copyfile(
+                    self.game_config.profile_vars_src_path,
+                    self.game_config.profile_vars_dst_path,
+                )
 
-        # Symlink Missions
         if os.path.exists(self.game_config.missions_src_path):
             self.symlink(
                 self.game_config.missions_src_path,
-                self.game_config.missions_dst_path,  # todo, showing "missions already linked" and dir is empty
+                self.game_config.missions_dst_path,
                 descriptor="Missions",
             )
+
+    def _setup_steam_client_libraries(self) -> None:
+        steamcmd_dir = self.game_config.steamcmd_root_dir(
+            self.game_config.os_manager.instance_root_dir
+        )
+        home_dir = os.path.expanduser("~")
+        for arch, steam_lib_dir in (("32", "linux32"), ("64", "linux64")):
+            sdk_dir = os.path.join(home_dir, ".steam", f"sdk{arch}")
+            os.makedirs(sdk_dir, exist_ok=True)
+            self.symlink(
+                os.path.join(steamcmd_dir, steam_lib_dir, "steamclient.so"),
+                os.path.join(sdk_dir, "steamclient.so"),
+                descriptor=f"Steam client library ({steam_lib_dir})",
+            )
+
+    def _write_steam_appid(self) -> None:
+        with open(self.game_config.steam_appid_file_path, "w") as appid_file:
+            appid_file.write(self.game_config.steam_appid)
 
     def _parse_mod_file(self) -> None:
         mod_file = open(self.game_config.mod_file_src_path, "r")
@@ -89,12 +111,18 @@ class Setup(AbstractGameSetup, ABC):
             launch_cmd = ["./" + self.game_config.binary_32bit]
         else:
             launch_cmd = ["./" + self.game_config.binary_64bit]
-        launch_cmd.extend(["-name=server"])
+        launch_cmd.extend([f"-name={self.game_config.profile_name}"])
+        launch_cmd.extend([f"-profiles={self.game_config.profiles_root_path}"])
+        launch_cmd.extend([f"-config={self.game_config.configuration_file_dst_path}"])
+        launch_cmd.extend([f"-port={self.game_config.game_port}"])
+
+        if self.game_config.dlcs:
+            for dlc_name in self.game_config.dlcs.split(","):
+                launch_cmd.extend([f"-mod={dlc_name}"])
+
         if self.launch_with_mods:
             for workshop_item_name in self.workshop_items.keys():
                 launch_cmd.extend([f"-mod=mods/@{workshop_item_name.lower()}"])
-
-        launch_cmd.extend(["-config=server.cfg"])
 
         print(" ".join(launch_cmd))
         subprocess.call(launch_cmd)
@@ -102,36 +130,51 @@ class Setup(AbstractGameSetup, ABC):
     def execute(self, *args: Any, **kwargs: Any) -> Any:
         self.logger.info(f"Executing {self.name()}...")
 
-        # Install SteamCMD
-        self.game_config.install_steamcmd_binary()
+        if not self.parsed_args.expedite_launch:  # todo, TEST THIS NEXT
+            # Install SteamCMD
+            self.game_config.install_steamcmd_binary()
 
-        # Install Game (Arma 3)
-        if not os.path.exists(self.game_config.game_install_path):
-            os.mkdir(self.game_config.game_install_path)
-        self.steam_cmd_client.install_game(self.game_config.game_id)
+            # Install Game (Arma 3)
+            if not os.path.exists(self.game_config.game_install_path):
+                os.makedirs(self.game_config.game_install_path, exist_ok=True)
 
-        # Server Configuration (Required files, modding etc)
-        self._link_game_config_files()
-        if os.path.exists(self.game_config.mod_file_src_path) and (
-            self.parsed_args.username is not None and self.parsed_args.password is not None
-        ):
-            self.launch_with_mods = True
-            if not os.path.exists(self.game_config.mod_file_dst_path):
-                os.mkdir(self.game_config.mod_file_dst_path)
-            self._parse_mod_file()
-            for workshop_item_name, workshop_item_id in self.workshop_items.items():
-                self._download_workshop_item(workshop_item_id)
-                workshop_item_download_path = os.path.join(
-                    self.game_config.workshop_items_download_path, workshop_item_id
-                )
-                self._link_workshop_item(workshop_item_name, workshop_item_download_path)
-                self._link_key_item(workshop_item_download_path)
+            if self.game_config.dlcs:
+                beta_arg = "creatordlc"
+            else:
+                beta_arg = None
+
+            self.steam_cmd_client.install_game(self.game_config.game_id, beta_arg)
+
+            # Server Configuration (Required files, modding etc)
+            self._link_game_config_files()
+            if os.path.exists(self.game_config.mod_file_src_path) and (
+                self.steam_cmd_client.has_credentials
+            ):
+                self.launch_with_mods = True
+                if not os.path.exists(self.game_config.mod_file_dst_path):
+                    os.mkdir(self.game_config.mod_file_dst_path)
+                self._parse_mod_file()
+                for workshop_item_name, workshop_item_id in self.workshop_items.items():
+                    self._download_workshop_item(workshop_item_id)
+                    workshop_item_download_path = os.path.join(
+                        self.game_config.workshop_items_download_path, workshop_item_id
+                    )
+                    self._link_workshop_item(workshop_item_name, workshop_item_download_path)
+                    self._link_key_item(workshop_item_download_path)
+        else:
+            self._link_game_config_files()
+            if os.path.exists(self.game_config.mod_file_dst_path):
+                self._parse_mod_file()
+                self.launch_with_mods = True
+
+        self._setup_steam_client_libraries()
+        self._write_steam_appid()
 
         # Launch Game
         if os.path.exists(
             os.path.join(self.game_config.game_install_path, self.game_config.binary_32bit)
         ) or os.path.exists(
-            os.path.join(self.game_config.game_install_path, self.game_config.binary_32bit)
+            os.path.join(self.game_config.game_install_path, self.game_config.binary_64bit)
         ):
             self._launch_game()
             self.logger.info(f"{self.name()} has been Executed.")
